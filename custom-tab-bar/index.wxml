@@ -1,0 +1,33 @@
+<view class="tab-bar">
+  <view
+    class="tab-item {{item.special ? 'tab-item-center' : ''}}"
+    wx:for="{{list}}"
+    wx:key="pagePath"
+    bindtap="switchTab"
+    data-index="{{index}}"
+  >
+    <!-- 中间定制按钮（特殊样式） -->
+    <view wx:if="{{item.special}}" class="tab-center-wrap">
+      <view class="tab-center-btn">
+        <text class="tab-center-plus">+</text>
+      </view>
+      <text class="tab-center-label {{selected === index ? 'tab-label-active' : 'tab-label'}}">{{item.text}}</text>
+    </view>
+
+    <!-- 普通 tab -->
+    <view wx:else class="tab-normal">
+      <view class="tab-icon-wrap">
+        <image
+          class="tab-icon"
+          src="{{selected === index ? item.selectedIconPath : item.iconPath}}"
+          mode="aspectFit"
+        />
+        <!-- 购物车数量角标 -->
+        <view class="cart-badge" wx:if="{{index === 3 && cartCount > 0}}">
+          <text class="cart-badge-text">{{cartCount > 99 ? '99+' : cartCount}}</text>
+        </view>
+      </view>
+      <text class="tab-label {{selected === index ? 'tab-label-active' : ''}}">{{item.text}}</text>
+    </view>
+  </view>
+</view>

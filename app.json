@@ -1,0 +1,77 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/custom/custom",
+    "pages/cart/cart",
+    "pages/profile/profile",
+    "pages/detail/detail",
+    "pages/orders/orders",
+    "pages/address/address",
+    "pages/favorites/favorites",
+    "pages/login/login",
+    "pages/coupon/coupon",
+    "pages/user-profile/user-profile",
+    "pages/checkout/checkout",
+    "pages/service/service",
+    "pages/merchant/index/index",
+    "pages/merchant/products/products",
+    "pages/merchant/add-product/add-product",
+    "pages/merchant/orders/orders",
+    "pages/merchant/coupon/coupon",
+    "pages/merchant/service/service",
+    "pages/merchant/banner/banner",
+    "pages/merchant/custom/custom",
+    "pages/merchant/cases/cases",
+    "pages/merchant/newbie/newbie",
+    "pages/newbie-detail/newbie-detail",
+    "pages/merchant/newbie-form/newbie-form",
+    "pages/merchant/ship-form/ship-form",
+    "pages/my-custom/my-custom",
+    "pages/grass/grass",
+    "pages/review/review",
+    "pages/merchant/grass/grass",
+    "pages/merchant/grass-form/grass-form",
+    "pages/merchant/reviews/reviews",
+    "pages/merchant/shipping/shipping",
+    "pages/all-reviews/all-reviews"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F3EF",
+    "navigationBarTitleText": "Petit Aura",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F6F3EF"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8B7961",
+    "selectedColor": "#3A332D",
+    "backgroundColor": "#F6F3EF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/custom/custom",
+        "text": "定制"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

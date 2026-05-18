@@ -1,0 +1,160 @@
+/* 全局样式 */
+page {
+  background-color: #F5EFE6;
+  color: #2C1A0E;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+/* 通用容器 */
+.container {
+  padding: 0 32rpx;
+}
+
+/* 通用卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 20rpx rgba(44,26,14,0.07);
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background-color: #EDE5D8;
+  margin: 0 32rpx;
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: #2C1A0E;
+  color: #F5EFE6;
+  border-radius: 56rpx;
+  padding: 24rpx 48rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  line-height: 1;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+/* 次按钮 */
+.btn-outline {
+  background: transparent;
+  color: #2C1A0E;
+  border: 2rpx solid #2C1A0E;
+  border-radius: 56rpx;
+  padding: 22rpx 48rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1;
+}
+
+.btn-outline::after {
+  border: none;
+}
+
+/* 标题区 */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40rpx 32rpx 24rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #2C1A0E;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #9C8672;
+}
+
+/* 商品卡片 */
+.product-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 16rpx rgba(44,26,14,0.07);
+}
+
+.product-card-info {
+  padding: 20rpx;
+}
+
+.product-name {
+  font-size: 28rpx;
+  color: #2C1A0E;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  font-weight: 500;
+}
+
+.product-price {
+  font-size: 32rpx;
+  color: #6B4F35;
+  font-weight: 700;
+  display: block;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  color: #9C8672;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 24rpx;
+  opacity: 0.35;
+  display: block;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #9C8672;
+  display: block;
+  font-weight: 500;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 10rpx;
+  font-size: 22rpx;
+  background: #EDE5D8;
+  color: #9C8672;
+}
+
+/* 加载 */
+.loading {
+  text-align: center;
+  padding: 40rpx;
+  color: #9C8672;
+  font-size: 26rpx;
+  display: block;
+}
+
+/* 安全区 */
+.safe-bottom {
+  height: env(safe-area-inset-bottom);
+}
