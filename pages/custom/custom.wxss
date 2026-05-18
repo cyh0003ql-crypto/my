@@ -1,0 +1,409 @@
+page { background: #F5EFE6; height: 100%; }
+.page { background: #F5EFE6; min-height: 100vh; }
+
+/* ── 标题区 ── */
+.hero {
+  padding: 48rpx 40rpx 32rpx;
+  text-align: center;
+}
+.hero-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #2C1A0E;
+  margin-bottom: 12rpx;
+}
+.hero-sub {
+  display: block;
+  font-size: 26rpx;
+  color: #9C8672;
+}
+
+/* ── 上传区 ── */
+.upload-card {
+  margin: 0 24rpx 20rpx;
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  border: 2rpx dashed #D2C8BB;
+  overflow: hidden;
+  min-height: 280rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 32rpx;
+  gap: 10rpx;
+}
+
+.upload-cloud-icon {
+  width: 110rpx;
+  height: 110rpx;
+  background: #EDE5D8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
+}
+
+.upload-cloud-svg {
+  width: 60rpx;
+  height: 60rpx;
+  display: block;
+}
+
+.upload-label {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2C1A0E;
+}
+
+.upload-tip {
+  display: block;
+  font-size: 24rpx;
+  color: #C0B8AE;
+}
+
+/* 已上传预览 */
+.upload-preview {
+  padding: 24rpx;
+  width: 100%;
+}
+
+.upload-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.preview-thumb {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  position: relative;
+  overflow: hidden;
+  background: #EDE5D8;
+}
+
+.preview-img {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.preview-del {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 38rpx;
+  height: 38rpx;
+  background: rgba(44,26,14,0.55);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #FFFFFF;
+}
+
+.upload-add-more {
+  width: 160rpx;
+  height: 160rpx;
+  background: #EDE5D8;
+  border-radius: 16rpx;
+  border: 2rpx dashed #D2C8BB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-more-icon {
+  font-size: 52rpx;
+  color: #C0B8AE;
+  line-height: 1;
+}
+
+/* ── 选项卡片网格 ── */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+  padding: 0 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.option-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 28rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(44,26,14,0.06);
+}
+
+.option-expanded {
+  grid-column: 1 / -1;
+}
+
+.option-top {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+/* SVG 图标包裹框 */
+.opt-icon-wrap {
+  width: 72rpx;
+  height: 72rpx;
+  background: #EDE5D8;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.opt-icon-svg {
+  width: 36rpx;
+  height: 36rpx;
+  display: block;
+}
+
+.option-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.option-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C1A0E;
+  margin-bottom: 4rpx;
+}
+
+.option-sub {
+  display: block;
+  font-size: 22rpx;
+  color: #9C8672;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ref-badge {
+  background: #9C8672;
+  color: #FFFFFF;
+  font-size: 20rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36rpx;
+  flex-shrink: 0;
+}
+
+/* 展开区域 */
+.option-textarea {
+  display: block;
+  width: 100%;
+  min-height: 160rpx;
+  font-size: 26rpx;
+  color: #2C1A0E;
+  margin-top: 16rpx;
+  line-height: 1.6;
+  background: #F5EFE6;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  box-sizing: border-box;
+}
+
+.option-input {
+  display: block;
+  width: 100%;
+  font-size: 26rpx;
+  color: #2C1A0E;
+  margin-top: 16rpx;
+  padding: 12rpx 0;
+  border-top: 1rpx solid #EDE5D8;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.ta-placeholder {
+  color: #C0B8AE;
+}
+
+.char-count {
+  display: block;
+  font-size: 22rpx;
+  color: #C0B8AE;
+  text-align: right;
+  margin-top: 8rpx;
+}
+
+/* 参考图预览 */
+.ref-preview {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 16rpx;
+  flex-wrap: wrap;
+}
+
+.ref-thumb {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  background: #EDE5D8;
+}
+
+/* ── 参考案例面板 ── */
+.cases-panel {
+  margin-top: 16rpx;
+  border-top: 1rpx solid #EDE5D8;
+  padding-top: 16rpx;
+}
+
+.cases-empty {
+  padding: 20rpx 8rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.cases-empty-text {
+  font-size: 26rpx;
+  color: #9C8672;
+  display: block;
+}
+
+.cases-empty-sub {
+  font-size: 22rpx;
+  color: #C0B8AE;
+  display: block;
+}
+
+.cases-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.cases-row {
+  display: flex;
+  gap: 16rpx;
+  padding-bottom: 8rpx;
+}
+
+.case-thumb-item {
+  display: inline-flex;
+  flex-direction: column;
+  width: 160rpx;
+  flex-shrink: 0;
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 3rpx solid transparent;
+  background: #F5EFE6;
+  position: relative;
+}
+
+.case-thumb-item.case-selected {
+  border-color: #6B4F35;
+}
+
+.case-thumb-img {
+  width: 160rpx;
+  height: 160rpx;
+  display: block;
+}
+
+.case-thumb-no-img {
+  width: 160rpx;
+  height: 160rpx;
+  background: #EDE5D8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #9C8672;
+}
+
+.case-check {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #6B4F35;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  line-height: 40rpx;
+  text-align: center;
+}
+
+.case-thumb-info {
+  padding: 10rpx 10rpx 12rpx;
+}
+
+.case-thumb-name {
+  display: block;
+  font-size: 22rpx;
+  color: #2C1A0E;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.case-thumb-price {
+  display: block;
+  font-size: 20rpx;
+  color: #C87341;
+  margin-top: 4rpx;
+}
+
+/* ── 提交成功 ── */
+.success-tip {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin: 0 24rpx 16rpx;
+  background: #EAF3EA;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+}
+
+.success-icon {
+  font-size: 36rpx;
+  color: #5A8A5A;
+}
+
+.success-text {
+  font-size: 26rpx;
+  color: #5A8A5A;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* ── 提交按钮 ── */
+.submit-area {
+  padding: 0 24rpx;
+}
+
+.submit-btn {
+  background: #2C1A0E;
+  color: #F5EFE6;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  padding: 30rpx 0;
+  border-radius: 48rpx;
+  box-shadow: 0 6rpx 24rpx rgba(44,26,14,0.2);
+}

@@ -1,0 +1,94 @@
+<scroll-view scroll-y class="page">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">
+      <text class="nav-back-icon">‹</text>
+    </view>
+    <text class="nav-title">商品评价</text>
+  </view>
+
+  <view class="rating-summary" wx:if="{{reviews.length > 0}}">
+    <view class="rating-stars-row">
+      <text class="star-icon star-on" wx:for="{{fullStars}}" wx:key="index">★</text>
+      <text class="star-icon star-half" wx:if="{{hasHalfStar}}">★</text>
+      <text class="star-icon star-off" wx:for="{{emptyStars}}" wx:key="index">★</text>
+    </view>
+    <text class="rating-score">评分 {{avgRating}}</text>
+    <text class="rating-total">共 {{reviews.length}} 条评价</text>
+  </view>
+
+  <!-- 筛选 Tab -->
+  <view class="filter-tabs" wx:if="{{reviews.length > 0}}">
+    <view
+      class="filter-tab {{activeFilter === 'all' ? 'filter-tab-on' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="all"
+    >全部 ({{reviews.length}})</view>
+    <view
+      class="filter-tab {{activeFilter === 'image' ? 'filter-tab-on' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="image"
+    >有图 ({{imageReviewCount}})</view>
+  </view>
+
+  <view class="empty-wrap" wx:if="{{reviews.length === 0}}">
+    <text class="empty-icon">💬</text>
+    <text class="empty-text">暂无评论</text>
+    <text class="empty-sub">购买后来晒晒你的心得吧～</text>
+  </view>
+
+  <view class="empty-wrap" wx:elif="{{filteredReviews.length === 0}}">
+    <text class="empty-icon">🖼️</text>
+    <text class="empty-text">暂无有图评论</text>
+    <text class="empty-sub">买家还没有上传评价图片</text>
+  </view>
+
+  <view class="review-list" wx:else>
+    <view class="rv-item" wx:for="{{filteredReviews}}" wx:key="id">
+      <view class="rv-head">
+        <view class="rv-avatar-bg">
+          <text class="rv-avatar-icon">{{item.avatar || '🙂'}}</text>
+        </view>
+        <view class="rv-meta">
+          <text class="rv-user">{{item.username || '匿名用户'}}</text>
+          <view class="rv-stars-row">
+            <text
+              class="rv-star {{s ? 'rv-star-on' : 'rv-star-off'}}"
+              wx:for="{{item.stars}}"
+              wx:for-item="s"
+              wx:key="index"
+            >★</text>
+          </view>
+        </view>
+        <text class="rv-date">{{item.dateStr}}</text>
+      </view>
+
+      <!-- SKU 规格展示 -->
+      <view class="rv-sku-tag" wx:if="{{item.sku}}">
+        <text class="rv-sku-text">{{item.sku}}</text>
+      </view>
+
+      <text class="rv-content">{{item.content}}</text>
+
+      <!-- 评价图片 -->
+      <view class="rv-images" wx:if="{{item.images && item.images.length > 0}}">
+        <image
+          class="rv-img"
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="index"
+          src="{{img}}"
+          mode="aspectFill"
+          bindtap="onPreviewImg"
+          data-src="{{img}}"
+          data-all="{{item.images}}"
+        />
+      </view>
+
+      <view class="rv-highlight-badge" wx:if="{{item.isHighlight}}">
+        <text class="badge-text">精选好评</text>
+      </view>
+    </view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</scroll-view>

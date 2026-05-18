@@ -1,0 +1,42 @@
+.page { background: #F0ECE6; min-height: 100vh; }
+.addr-scroll { height: calc(100vh - 120rpx); }
+.addr-list { padding: 20rpx 24rpx; }
+.addr-card { background: #FFFFFF; border-radius: 20rpx; margin-bottom: 20rpx; overflow: hidden; box-shadow: 0 2rpx 12rpx rgba(58,51,45,0.06); }
+.addr-info { padding: 24rpx 24rpx 16rpx; }
+.addr-head { display: flex; align-items: center; gap: 16rpx; margin-bottom: 10rpx; }
+.addr-name { font-size: 30rpx; font-weight: 600; color: #3A332D; }
+.addr-phone { font-size: 26rpx; color: #8B7961; }
+.default-badge { background: #3A332D; color: #F6F3EF; font-size: 20rpx; padding: 4rpx 12rpx; border-radius: 6rpx; }
+.addr-full { font-size: 26rpx; color: #8B7961; display: block; line-height: 1.5; }
+.addr-actions { display: flex; gap: 0; border-top: 1rpx solid #F0ECE6; }
+.set-default, .addr-edit, .addr-del {
+  flex: 1; text-align: center; padding: 20rpx 0;
+  font-size: 24rpx; color: #8B7961;
+  border-right: 1rpx solid #F0ECE6;
+}
+.addr-del:last-child { border-right: none; }
+.addr-del { color: #C87941; }
+
+.form-wrap { padding: 24rpx; }
+.form-title { font-size: 30rpx; font-weight: 600; color: #3A332D; display: block; margin-bottom: 20rpx; }
+.form-group { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; }
+.form-field { display: flex; align-items: flex-start; padding: 24rpx; border-bottom: 1rpx solid #F0ECE6; gap: 16rpx; }
+.form-field:last-child { border-bottom: none; }
+.f-label { width: 80rpx; font-size: 28rpx; color: #8B7961; flex-shrink: 0; padding-top: 4rpx; }
+.f-input { flex: 1; font-size: 28rpx; color: #3A332D; height: 80rpx; line-height: 80rpx; }
+.f-textarea { flex: 1; font-size: 28rpx; color: #3A332D; min-height: 80rpx; }
+.default-row { align-items: center; }
+.toggle { width: 80rpx; height: 44rpx; background: #D2C8BB; border-radius: 22rpx; position: relative; transition: background 0.2s; }
+.toggle.on { background: #3A332D; }
+.toggle-ball { width: 36rpx; height: 36rpx; background: #FFFFFF; border-radius: 50%; position: absolute; top: 4rpx; left: 4rpx; transition: left 0.2s; }
+.toggle.on .toggle-ball { left: 40rpx; }
+.form-btns { display: flex; gap: 20rpx; margin-top: 28rpx; }
+.cancel-btn { flex: 1; text-align: center; padding: 28rpx; background: #EAE6E0; border-radius: 48rpx; font-size: 28rpx; color: #3A332D; }
+.save-btn { flex: 1; text-align: center; padding: 28rpx; background: #3A332D; border-radius: 48rpx; font-size: 28rpx; color: #F6F3EF; }
+
+.add-btn-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 20rpx 32rpx; background: #F6F3EF; border-top: 1rpx solid #EAE6E0; }
+.add-btn { background: #3A332D; color: #F6F3EF; text-align: center; padding: 28rpx; border-radius: 48rpx; font-size: 30rpx; }
+.safe-bottom { height: env(safe-area-inset-bottom); }
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120rpx 32rpx; }
+.empty-icon { font-size: 100rpx; margin-bottom: 24rpx; opacity: 0.4; }
+.empty-text { font-size: 28rpx; color: #8B7961; }

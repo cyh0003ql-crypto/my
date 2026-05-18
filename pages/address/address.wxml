@@ -1,0 +1,74 @@
+<view class="page">
+  <scroll-view scroll-y class="addr-scroll">
+    <view wx:if="{{addresses.length === 0 && !showForm}}" class="empty-state">
+      <text class="empty-icon">📍</text>
+      <text class="empty-text">暂无收货地址</text>
+    </view>
+
+    <view class="addr-list" wx:if="{{!showForm}}">
+      <view class="addr-card" wx:for="{{addresses}}" wx:key="id">
+        <view class="addr-info" bindtap="onEdit" data-id="{{item.id}}">
+          <view class="addr-head">
+            <text class="addr-name">{{item.name}}</text>
+            <text class="addr-phone">{{item.phone}}</text>
+            <view class="default-badge" wx:if="{{item.isDefault}}">默认</view>
+          </view>
+          <text class="addr-full">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</text>
+        </view>
+        <view class="addr-actions">
+          <view class="set-default" bindtap="onSetDefault" data-id="{{item.id}}" wx:if="{{!item.isDefault}}">设为默认</view>
+          <view class="addr-edit" bindtap="onEdit" data-id="{{item.id}}">编辑</view>
+          <view class="addr-del" bindtap="onDelete" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 表单 -->
+    <view class="form-wrap" wx:if="{{showForm}}">
+      <text class="form-title">{{editingId ? '编辑地址' : '新增地址'}}</text>
+      <view class="form-group">
+        <view class="form-field">
+          <text class="f-label">姓名</text>
+          <input class="f-input" placeholder="收货人姓名" value="{{form.name}}" bindinput="onFormInput" data-field="name" />
+        </view>
+        <view class="form-field">
+          <text class="f-label">手机</text>
+          <input class="f-input" type="number" placeholder="联系手机号" value="{{form.phone}}" bindinput="onFormInput" data-field="phone" />
+        </view>
+        <view class="form-field">
+          <text class="f-label">省份</text>
+          <input class="f-input" placeholder="如：广东省" value="{{form.province}}" bindinput="onFormInput" data-field="province" />
+        </view>
+        <view class="form-field">
+          <text class="f-label">城市</text>
+          <input class="f-input" placeholder="如：广州市" value="{{form.city}}" bindinput="onFormInput" data-field="city" />
+        </view>
+        <view class="form-field">
+          <text class="f-label">区县</text>
+          <input class="f-input" placeholder="如：天河区" value="{{form.district}}" bindinput="onFormInput" data-field="district" />
+        </view>
+        <view class="form-field">
+          <text class="f-label">详址</text>
+          <textarea class="f-textarea" placeholder="详细地址（街道/楼号/门牌）" value="{{form.detail}}" bindinput="onFormInput" data-field="detail"></textarea>
+        </view>
+        <view class="form-field default-row" bindtap="onToggleDefault">
+          <text class="f-label">默认地址</text>
+          <view class="toggle {{form.isDefault ? 'on' : ''}}">
+            <view class="toggle-ball"></view>
+          </view>
+        </view>
+      </view>
+      <view class="form-btns">
+        <view class="cancel-btn" bindtap="onCancel">取消</view>
+        <view class="save-btn" bindtap="onSave">保存</view>
+      </view>
+    </view>
+
+    <view style="height:200rpx;"></view>
+  </scroll-view>
+
+  <view class="add-btn-bar" wx:if="{{!showForm}}">
+    <view class="add-btn" bindtap="onAdd">+ 新增收货地址</view>
+    <view class="safe-bottom"></view>
+  </view>
+</view>

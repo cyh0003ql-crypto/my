@@ -1,0 +1,136 @@
+<scroll-view scroll-y class="page">
+
+  <!-- 标题区 -->
+  <view class="hero">
+    <text class="hero-title">有什么想打印的？</text>
+    <text class="hero-sub">简单4步，轻松定制专属作品</text>
+  </view>
+
+  <!-- 上传区 -->
+  <view class="upload-card" bindtap="onUpload">
+    <view wx:if="{{uploadedImages.length === 0}}" class="upload-empty">
+      <view class="upload-cloud-icon">
+        <image class="upload-cloud-svg" src="/images/icons/cloud.svg" mode="aspectFit" />
+      </view>
+      <text class="upload-label">上传图片 / 模型</text>
+      <text class="upload-tip">支持JPG/PNG/STL/OBJ等格式</text>
+      <text class="upload-tip">文件不超过50MB</text>
+    </view>
+    <view wx:else class="upload-preview">
+      <view class="upload-grid">
+        <view class="preview-thumb" wx:for="{{uploadedImages}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill" class="preview-img" bindtap="onPreviewImage" data-src="{{item}}" />
+          <view class="preview-del" catchtap="onDeleteImage" data-index="{{index}}">✕</view>
+        </view>
+        <view class="upload-add-more" catchtap="onUpload" wx:if="{{uploadedImages.length < 9}}">
+          <text class="add-more-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 4个功能卡片 -->
+  <view class="options-grid">
+
+    <!-- 文字描述 -->
+    <view class="option-card {{showDesc ? 'option-expanded' : ''}}" bindtap="onToggleDesc">
+      <view class="option-top">
+        <view class="opt-icon-wrap">
+          <image class="opt-icon-svg" src="/images/icons/pencil.svg" mode="aspectFit" />
+        </view>
+        <view class="option-text">
+          <text class="option-title">文字描述</text>
+          <text class="option-sub">告诉我们你的想法</text>
+        </view>
+      </view>
+      <view wx:if="{{showDesc}}" catchtap="noop">
+        <textarea class="option-textarea" placeholder="描述你想要的定制效果、风格、用途..." placeholder-class="ta-placeholder" value="{{form.description}}" bindinput="onDescInput" maxlength="500" auto-height />
+        <text class="char-count">{{form.description.length}}/500</text>
+      </view>
+    </view>
+
+    <!-- 尺寸要求 -->
+    <view class="option-card {{showSize ? 'option-expanded' : ''}}" bindtap="onToggleSize">
+      <view class="option-top">
+        <view class="opt-icon-wrap">
+          <image class="opt-icon-svg" src="/images/icons/resize.svg" mode="aspectFit" />
+        </view>
+        <view class="option-text">
+          <text class="option-title">尺寸要求</text>
+          <text class="option-sub">提供尺寸信息</text>
+        </view>
+      </view>
+      <view wx:if="{{showSize}}" catchtap="noop">
+        <input class="option-input" placeholder="如：长20cm × 宽10cm × 高15cm" placeholder-class="ta-placeholder" value="{{form.size}}" bindinput="onSizeInput" />
+      </view>
+    </view>
+
+    <!-- 参考案例 -->
+    <view class="option-card {{showCases ? 'option-expanded' : ''}}" bindtap="onChooseReference">
+      <view class="option-top">
+        <view class="opt-icon-wrap">
+          <image class="opt-icon-svg" src="/images/icons/grid.svg" mode="aspectFit" />
+        </view>
+        <view class="option-text">
+          <text class="option-title">参考案例</text>
+          <text class="option-sub">{{selectedCases.length > 0 ? '已选' + selectedCases.length + '个案例' : '选择相似案例'}}</text>
+        </view>
+        <text class="ref-badge" wx:if="{{selectedCases.length > 0}}">{{selectedCases.length}}</text>
+      </view>
+
+      <!-- 展开后显示商家案例列表 -->
+      <view wx:if="{{showCases}}" catchtap="noop" class="cases-panel">
+        <view class="cases-empty" wx:if="{{merchantCases.length === 0}}">
+          <text class="cases-empty-text">商家暂未上传参考案例</text>
+          <text class="cases-empty-sub">请在文字描述中详细说明您的需求</text>
+        </view>
+        <scroll-view wx:else scroll-x class="cases-scroll">
+          <view class="cases-row">
+            <view
+              class="case-thumb-item {{item.isSelected ? 'case-selected' : ''}}"
+              wx:for="{{merchantCases}}"
+              wx:key="id"
+              catchtap="onToggleCase"
+              data-id="{{item.id}}"
+            >
+              <image class="case-thumb-img" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}" />
+              <view class="case-thumb-no-img" wx:else><text>无图</text></view>
+              <view class="case-check" wx:if="{{item.isSelected}}">✓</view>
+              <view class="case-thumb-info">
+                <text class="case-thumb-name">{{item.name}}</text>
+                <text class="case-thumb-price" wx:if="{{item.price}}">¥{{item.price}}起</text>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+
+    <!-- 联系客服 -->
+    <view class="option-card" bindtap="onContactService">
+      <view class="option-top">
+        <view class="opt-icon-wrap">
+          <image class="opt-icon-svg" src="/images/icons/chat.svg" mode="aspectFit" />
+        </view>
+        <view class="option-text">
+          <text class="option-title">联系客服</text>
+          <text class="option-sub">1对1沟通需求</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 已提交成功 -->
+  <view class="success-tip" wx:if="{{submitted}}">
+    <text class="success-icon">✓</text>
+    <text class="success-text">定制需求已提交，客服将在1个工作日内联系您</text>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-area">
+    <view class="submit-btn" bindtap="onSubmit">提交定制需求</view>
+  </view>
+
+  <view style="height:180rpx;"></view>
+</scroll-view>

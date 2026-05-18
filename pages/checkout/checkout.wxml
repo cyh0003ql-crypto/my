@@ -1,0 +1,203 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">确认订单</view>
+
+  <!-- 收货地址 -->
+  <view class="section-card addr-card" bindtap="onSelectAddress">
+    <view wx:if="{{address}}">
+      <view class="addr-top">
+        <text class="addr-name">{{address.name}}</text>
+        <text class="addr-phone">{{address.phone}}</text>
+      </view>
+      <text class="addr-detail">{{address.province}}{{address.city}}{{address.district}}{{address.detail}}</text>
+    </view>
+    <view wx:else class="addr-empty">
+      <text class="addr-empty-icon">📍</text>
+      <text class="addr-empty-text">请选择收货地址</text>
+    </view>
+    <text class="section-arrow">›</text>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="section-card">
+    <view class="section-hd">
+      <text class="section-label">商品清单</text>
+    </view>
+    <view class="order-item" wx:for="{{items}}" wx:key="index">
+      <image class="order-img" src="{{item.images[0] || item.image}}" mode="aspectFill" />
+      <view class="order-info">
+        <text class="order-name">{{item.name}}</text>
+        <text class="order-spec">{{item.spec || item.material}}</text>
+        <view class="order-bottom">
+          <text class="order-price">¥{{item.price}}</text>
+          <view class="co-qty-ctrl">
+            <view class="co-qty-btn" catchtap="onItemMinus" data-index="{{index}}">−</view>
+            <text class="co-qty-num">{{item.quantity}}</text>
+            <view class="co-qty-btn" catchtap="onItemPlus" data-index="{{index}}">+</view>
+          </view>
+        </view>
+      </view>
+      <view class="co-del-btn" catchtap="onItemDelete" data-index="{{index}}">✕</view>
+    </view>
+  </view>
+
+  <!-- 优惠券 -->
+  <view class="section-card coupon-row" bindtap="onSelectCoupon">
+    <view class="coupon-left">
+      <text class="coupon-icon">🎫</text>
+      <text class="coupon-label">优惠券</text>
+    </view>
+    <view class="coupon-right">
+      <text class="coupon-val active" wx:if="{{selectedCoupon}}">- ¥{{couponDiscount}}</text>
+      <text class="coupon-val" wx:elif="{{availableCoupons.length === 0}}">暂无可用</text>
+      <text class="coupon-hint" wx:elif="{{availableCoupons.length > 0}}">{{availableCoupons.length}}张可用</text>
+      <text class="section-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 礼品包装 -->
+  <view class="section-card gift-card" bindtap="onToggleGiftBag">
+    <view class="gift-left">
+      <text class="gift-icon">🎁</text>
+      <view class="gift-info">
+        <text class="gift-name">礼品包装</text>
+        <text class="gift-tip">精美礼品袋 · 送人更有心意</text>
+      </view>
+    </view>
+    <view class="gift-right">
+      <view class="gift-toggle {{giftBag ? 'on' : ''}}">
+        <view class="gift-toggle-ball"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 礼品袋商品卡（开启礼品包装后展开） -->
+  <view class="section-card gift-products-card" wx:if="{{giftBag && giftProducts.length > 0}}">
+    <view class="gift-prod-hd">
+      <text class="gift-prod-title">选择礼品袋款式</text>
+      <text class="gift-prod-sub">点击查看商品详情</text>
+    </view>
+    <view class="gift-prod-item" wx:for="{{giftProducts}}" wx:key="id">
+      <image class="gift-prod-img" src="{{item.image}}" mode="aspectFill" bindtap="onGiftProductTap" data-id="{{item.id}}" />
+      <view class="gift-prod-info" bindtap="onGiftProductTap" data-id="{{item.id}}">
+        <text class="gift-prod-name">{{item.name}}</text>
+        <text class="gift-prod-material">{{item.material}}</text>
+        <text class="gift-prod-size">{{item.size}}</text>
+      </view>
+      <view class="gift-prod-right">
+        <text class="gift-prod-price">¥{{item.price}}</text>
+        <view class="gift-add-btn" catchtap="onAddGiftToCart" data-id="{{item.id}}">
+          <text class="gift-add-icon">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 金额明细 -->
+  <view class="section-card amount-card">
+    <view class="amount-row">
+      <text class="amount-label">商品金额</text>
+      <text class="amount-val">¥{{productTotal}}</text>
+    </view>
+    <view class="amount-row">
+      <text class="amount-label">运费</text>
+      <text class="amount-val {{shipping === 0 ? 'free' : ''}}">{{shipping === 0 ? '免运费' : '¥' + shipping}}</text>
+    </view>
+    <view class="amount-row" wx:if="{{couponDiscount > 0}}">
+      <text class="amount-label">优惠减免</text>
+      <text class="amount-val discount">- ¥{{couponDiscount}}</text>
+    </view>
+    <view class="amount-divider"></view>
+    <view class="amount-row total-row">
+      <text class="amount-label-total">实付款</text>
+      <text class="amount-val-total">¥{{actualTotal}}</text>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="section-card">
+    <view class="remark-row">
+      <text class="remark-label">订单备注</text>
+      <input
+        class="remark-input"
+        placeholder="选填，可填写特殊需求"
+        placeholder-class="remark-placeholder"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+  </view>
+
+  <view style="height:160rpx;"></view>
+</scroll-view>
+
+<!-- 底部结算栏（fixed） -->
+<view class="bottom-bar">
+  <view class="bottom-total">
+    <text class="bt-label">实付</text>
+    <text class="bt-price">¥{{actualTotal}}</text>
+  </view>
+  <view class="pay-btn" bindtap="onPay">提交订单</view>
+</view>
+
+<!-- 优惠券选择弹窗 -->
+<view class="modal-mask" wx:if="{{showCouponModal}}" bindtap="onCloseCouponModal"></view>
+<view class="coupon-modal" wx:if="{{showCouponModal}}">
+  <view class="modal-drag-bar"></view>
+  <view class="modal-hd">
+    <text class="modal-title">选择优惠券</text>
+    <text class="modal-close" bindtap="onCloseCouponModal">✕</text>
+  </view>
+  <scroll-view scroll-y class="coupon-list">
+    <!-- 不使用优惠券 -->
+    <view class="coupon-item {{!selectedCoupon ? 'selected' : ''}}" bindtap="onClearCoupon">
+      <view class="coupon-body">
+        <text class="coupon-amt">不使用优惠券</text>
+      </view>
+      <view class="coupon-check" wx:if="{{!selectedCoupon}}">✓</view>
+    </view>
+    <view
+      class="coupon-item {{selectedCoupon && selectedCoupon.id === item.id ? 'selected' : ''}}"
+      wx:for="{{availableCoupons}}"
+      wx:key="id"
+      bindtap="onUseCoupon"
+      data-id="{{item.id}}"
+    >
+      <view class="coupon-body">
+        <view class="coupon-head">
+          <text class="coupon-amt">
+            {{item.type === 'fixed' ? '减¥' + item.discount : item.discount + '折'}}
+          </text>
+          <text class="coupon-tag">{{item.tag}}</text>
+        </view>
+        <text class="coupon-name">{{item.title}}</text>
+        <text class="coupon-min">满{{item.minAmount}}元可用 · {{item.expiresAt}}到期</text>
+      </view>
+      <view class="coupon-check" wx:if="{{selectedCoupon && selectedCoupon.id === item.id}}">✓</view>
+    </view>
+    <view wx:if="{{availableCoupons.length === 0}}" class="coupon-empty">
+      <text>暂无可用优惠券</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 支付弹窗 -->
+<view class="modal-mask" wx:if="{{showPayModal}}" bindtap="onClosePayModal"></view>
+<view class="pay-modal" wx:if="{{showPayModal}}">
+  <view class="modal-drag-bar"></view>
+  <view class="modal-hd">
+    <text class="modal-title">确认支付</text>
+    <text class="modal-close" bindtap="onClosePayModal">✕</text>
+  </view>
+  <view class="pay-amount-row">
+    <text class="pay-amount-label">实付金额</text>
+    <text class="pay-amount">¥{{actualTotal}}</text>
+  </view>
+  <view class="pay-method active">
+    <text class="pay-icon">💚</text>
+    <text class="pay-name">微信支付</text>
+    <text class="pay-check">✓</text>
+  </view>
+  <text class="pay-dev-tip">（开发阶段·模拟支付）</text>
+  <button class="pay-confirm-btn" bindtap="onSimulatePay">确认支付 ¥{{actualTotal}}</button>
+  <view style="height:env(safe-area-inset-bottom);"></view>
+</view>

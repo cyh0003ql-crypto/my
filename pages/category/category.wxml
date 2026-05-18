@@ -1,0 +1,64 @@
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-wrap">
+    <view class="search-bar">
+      <image class="s-icon-img" src="/images/icons/search.svg" mode="aspectFit" />
+      <input
+        class="s-input"
+        placeholder="搜索商品"
+        placeholder-class="s-placeholder"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+      />
+      <text class="s-clear" wx:if="{{keyword}}" bindtap="onClearSearch">✕</text>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- 左侧分类：SVG 线条图标 -->
+    <scroll-view scroll-y class="cat-sidebar">
+      <view
+        class="cat-item {{activeCategory === item.id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="id"
+        bindtap="onCategoryTap"
+        data-id="{{item.id}}"
+      >
+        <image class="cat-icon-svg" src="/images/icons/{{item.id}}.svg" mode="aspectFit" />
+        <text class="cat-name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧商品列表 -->
+    <scroll-view scroll-y class="product-area">
+      <view wx:if="{{products.length === 0}}" class="empty-state">
+        <text class="empty-icon">🛋️</text>
+        <text class="empty-text">暂无相关商品</text>
+      </view>
+
+      <view wx:else class="product-grid">
+        <view
+          class="prod-card"
+          wx:for="{{products}}"
+          wx:key="id"
+          bindtap="onProductTap"
+          data-id="{{item.id}}"
+        >
+          <view class="prod-img-wrap">
+            <image src="{{item.image}}" mode="aspectFill" class="prod-img" lazy-load />
+            <view class="new-badge" wx:if="{{item.isNew}}">新</view>
+          </view>
+          <view class="prod-info">
+            <text class="prod-name">{{item.name}}</text>
+            <text class="prod-designer">{{item.designer}}</text>
+            <view class="prod-bottom">
+              <text class="prod-price">¥{{item.price}}</text>
+              <view class="cart-btn" catchtap="onAddToCart" data-id="{{item.id}}">+</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
