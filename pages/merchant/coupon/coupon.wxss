@@ -1,0 +1,121 @@
+page { background: #F0ECE6; height: 100%; }
+.page { display: flex; flex-direction: column; height: 100vh; background: #F0ECE6; }
+.scroll-body { flex: 1; }
+
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28rpx 28rpx 16rpx;
+}
+.top-title { font-size: 32rpx; font-weight: 600; color: #3A332D; }
+.add-btn {
+  background: #3A332D; color: #F6F3EF;
+  font-size: 26rpx; padding: 16rpx 28rpx; border-radius: 32rpx;
+}
+
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 160rpx 32rpx;
+}
+.empty-icon { font-size: 100rpx; opacity: 0.3; display: block; margin-bottom: 20rpx; }
+.empty-text { font-size: 28rpx; color: #8B7961; display: block; }
+
+.coupon-list { padding: 0 24rpx; display: flex; flex-direction: column; gap: 20rpx; }
+.coupon-card {
+  background: #FFFFFF; border-radius: 20rpx; overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(58,51,45,0.06);
+}
+.coupon-head { padding: 24rpx 24rpx 0; }
+.coupon-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8rpx; gap: 12rpx; }
+.coupon-name { font-size: 30rpx; font-weight: 600; color: #3A332D; flex: 1; }
+.badge-row { display: flex; gap: 8rpx; align-items: center; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.status-badge {
+  font-size: 20rpx; padding: 5rpx 14rpx; border-radius: 8rpx;
+}
+.status-badge.active { background: #E8F5E9; color: #4CAF50; }
+.status-badge.disabled { background: #EAE6E0; color: #8B7961; }
+.status-badge.public { background: #FEF3EA; color: #C87941; }
+.status-badge.newbie { background: #FFF3CD; color: #946300; }
+.coupon-desc { font-size: 26rpx; color: #8B7961; display: block; margin-bottom: 16rpx; }
+
+.coupon-meta {
+  display: flex;
+  border-top: 1rpx solid #F0ECE6;
+  padding: 16rpx 24rpx;
+}
+.meta-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4rpx; }
+.meta-label { font-size: 20rpx; color: #C0B8AE; display: block; }
+.meta-val { font-size: 26rpx; color: #3A332D; font-weight: 500; display: block; }
+
+.coupon-actions {
+  display: flex; justify-content: flex-end;
+  padding: 0 24rpx 20rpx;
+}
+.action-btn {
+  font-size: 24rpx; padding: 10rpx 24rpx; border-radius: 8rpx;
+}
+.action-btn.danger { background: #FEF3EA; color: #C87941; }
+
+/* 发放设置切换 */
+.toggle-section {
+  background: #FFFFFF; border-radius: 16rpx; overflow: hidden;
+  margin-top: 16rpx;
+}
+.toggle-row {
+  display: flex; align-items: center; padding: 24rpx;
+  border-bottom: 1rpx solid #F0ECE6; gap: 16rpx;
+}
+.toggle-row:last-child { border-bottom: none; }
+.toggle-info { flex: 1; }
+.toggle-label { font-size: 28rpx; color: #3A332D; display: block; margin-bottom: 6rpx; }
+.toggle-desc { font-size: 22rpx; color: #8B7961; display: block; }
+.toggle-ctrl {
+  width: 88rpx; height: 48rpx; background: #D2C8BB;
+  border-radius: 24rpx; position: relative; flex-shrink: 0;
+}
+.toggle-ctrl.on { background: #3A332D; }
+.toggle-ball {
+  width: 40rpx; height: 40rpx; background: #FFFFFF;
+  border-radius: 50%; position: absolute; top: 4rpx; left: 4rpx;
+}
+.toggle-ctrl.on .toggle-ball { left: 44rpx; }
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed; inset: 0;
+  background: rgba(58,51,45,0.5); z-index: 100;
+}
+.form-modal {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #F6F3EF;
+  border-radius: 32rpx 32rpx 0 0;
+  max-height: 90vh;
+  display: flex; flex-direction: column;
+  z-index: 101;
+}
+.modal-hd {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28rpx 32rpx 20rpx;
+  border-bottom: 1rpx solid #EAE6E0;
+  flex-shrink: 0;
+}
+.modal-title { font-size: 32rpx; font-weight: 600; color: #3A332D; }
+.close-btn { font-size: 32rpx; color: #8B7961; width: 60rpx; text-align: right; }
+.modal-scroll { flex: 1; padding: 0 32rpx; }
+
+.field-row {
+  display: flex; align-items: center;
+  background: #FFFFFF; border-radius: 16rpx;
+  padding: 24rpx; margin-top: 16rpx; gap: 16rpx;
+}
+.field-label { font-size: 26rpx; color: #8B7961; width: 120rpx; flex-shrink: 0; }
+.field-input { flex: 1; font-size: 28rpx; color: #3A332D; height: 80rpx; line-height: 80rpx; }
+.picker-val { flex: 1; font-size: 28rpx; color: #3A332D; }
+
+.save-coupon-btn {
+  width: 100%; background: #3A332D; color: #F6F3EF;
+  border-radius: 48rpx; font-size: 32rpx; font-weight: 500;
+  padding: 28rpx 0; text-align: center; border: none; line-height: 1;
+  margin-top: 32rpx;
+}
+.save-coupon-btn::after { border: none; }
+.save-coupon-btn.saving { background: #8B7961; }

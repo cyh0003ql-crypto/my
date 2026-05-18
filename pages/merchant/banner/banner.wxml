@@ -1,0 +1,106 @@
+<view class="page">
+  <scroll-view scroll-y class="scroll">
+
+    <!-- 说明提示 -->
+    <view class="tips-bar">
+      <text class="tips-text">🖼️ 轮播广告最多3条，拖动顺序即显示顺序</text>
+    </view>
+
+    <!-- 广告列表 -->
+    <view class="banner-list">
+      <view class="banner-item" wx:for="{{banners}}" wx:key="id">
+
+        <!-- 预览图 -->
+        <view class="banner-preview" style="background:{{item.bg}};">
+          <image class="preview-img" src="{{item.image}}" mode="aspectFill" />
+          <view class="preview-overlay">
+            <text class="preview-title">{{item.mainTitle}}</text>
+          </view>
+          <view class="banner-index">{{index + 1}}</view>
+        </view>
+
+        <!-- 编辑区 -->
+        <view class="banner-form">
+          <view class="form-row">
+            <text class="form-label">主标题</text>
+            <input
+              class="form-input"
+              value="{{item.mainTitle}}"
+              placeholder="如：空间艺术\n心灵栖居"
+              bindinput="onMainTitleInput"
+              data-index="{{index}}"
+            />
+          </view>
+          <view class="form-sep"></view>
+          <view class="form-row">
+            <text class="form-label">副标题</text>
+            <input
+              class="form-input"
+              value="{{item.subtitle}}"
+              placeholder="如：极简美学 · 温暖生活"
+              bindinput="onSubtitleInput"
+              data-index="{{index}}"
+            />
+          </view>
+          <view class="form-sep"></view>
+          <view class="form-row">
+            <text class="form-label">按钮文字</text>
+            <input
+              class="form-input"
+              value="{{item.btn}}"
+              placeholder="如：探索系列"
+              bindinput="onBtnInput"
+              data-index="{{index}}"
+            />
+          </view>
+          <view class="form-sep"></view>
+          <view class="form-row">
+            <text class="form-label">商品图片</text>
+            <view class="img-picker" bindtap="onPickImage" data-index="{{index}}">
+              <image wx:if="{{item.image}}" class="img-thumb" src="{{item.image}}" mode="aspectFill" />
+              <view wx:else class="img-placeholder">
+                <text class="img-placeholder-icon">+</text>
+                <text class="img-placeholder-text">选择图片</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="item-actions">
+          <view class="action-btn {{index === 0 ? 'disabled' : ''}}" bindtap="onMoveUp" data-index="{{index}}">
+            <text class="action-text">↑ 上移</text>
+          </view>
+          <view class="action-btn {{index === banners.length - 1 ? 'disabled' : ''}}" bindtap="onMoveDown" data-index="{{index}}">
+            <text class="action-text">↓ 下移</text>
+          </view>
+          <view class="action-btn action-btn-danger" bindtap="onDeleteBanner" data-index="{{index}}">
+            <text class="action-text">删除</text>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+    <!-- 添加新广告 -->
+    <view class="add-section" wx:if="{{banners.length < 3}}">
+      <view class="add-btn" bindtap="onAddBanner">
+        <text class="add-icon">+</text>
+        <text class="add-text">上传新广告</text>
+      </view>
+    </view>
+    <view class="add-full-tip" wx:else>
+      <text class="add-full-text">已达最多3条广告上限，请删除后再添加</text>
+    </view>
+
+    <view style="height:140rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部保存按钮 -->
+  <view class="bottom-bar">
+    <view class="reset-btn" bindtap="onReset">恢复默认</view>
+    <view class="save-btn {{saving ? 'saving' : ''}}" bindtap="onSave">
+      <text>{{saving ? '保存中...' : '保存广告'}}</text>
+    </view>
+  </view>
+</view>

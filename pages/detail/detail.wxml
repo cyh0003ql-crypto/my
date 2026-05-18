@@ -1,0 +1,328 @@
+<!-- 自定义导航栏 -->
+<view class="custom-nav" style="padding-top:{{statusBarHeight}}px;" wx:if="{{product}}">
+  <view class="nav-inner">
+    <view class="nav-back" bindtap="onBack">
+      <text class="nav-back-icon">‹</text>
+    </view>
+    <text class="nav-title">Petit Aura</text>
+  </view>
+</view>
+
+<!-- 商品正常页 -->
+<scroll-view
+  scroll-y
+  class="page"
+  wx:if="{{product}}"
+  style="margin-top:{{navHeight}}px; height:calc(100vh - {{navHeight}}px);"
+>
+
+  <!-- 图片轮播 -->
+  <view class="img-section">
+    <swiper
+      class="img-swiper"
+      circular
+      current="{{currentImage}}"
+      bindchange="onImageChange"
+      indicator-dots
+      indicator-color="rgba(255,255,255,0.45)"
+      indicator-active-color="#FFFFFF"
+    >
+      <swiper-item wx:for="{{product.images}}" wx:key="index">
+        <image
+          src="{{item}}"
+          mode="aspectFill"
+          class="main-img"
+          data-src="{{item}}"
+          bindtap="onPreviewImage"
+          lazy-load
+        />
+      </swiper-item>
+    </swiper>
+    <!-- 图片右上角：分享 + 收藏 -->
+    <view class="img-float-btns">
+      <view class="img-float-btn share-btn" bindtap="onShare">
+        <text class="img-float-icon share-float-icon">↑</text>
+      </view>
+      <view
+        class="img-float-btn {{favScaling ? 'fav-scaling' : ''}}"
+        bindtouchstart="onFavTouchStart"
+        bindtouchend="onFavTouchEnd"
+        bindtap="onToggleFavorite"
+      >
+        <text class="img-float-icon {{isFavorite ? 'heart-active' : 'heart-idle'}}">{{isFavorite ? '♥' : '♡'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 价格 + 名称 -->
+  <view class="info-block">
+    <view class="price-row">
+      <text class="price">¥{{product.price}}</text>
+      <text class="origin-price" wx:if="{{product.originalPrice > product.price}}">¥{{product.originalPrice}}</text>
+      <view class="price-badges">
+        <view class="sold-badge" wx:if="{{soldCount > 0}}">已售 {{soldCount}} 件</view>
+        <view class="stock-badge {{product.stock <= 3 ? 'low' : ''}}">
+          {{product.stock > 0 ? '库存 ' + product.stock : '已售罄'}}
+        </view>
+      </view>
+    </view>
+    <text class="prod-name">{{product.name}}</text>
+    <view class="tags-row">
+      <text class="tag" wx:for="{{product.tags}}" wx:key="index">{{item}}</text>
+    </view>
+    <view class="review-entry-row" bindtap="onGoAllReviews" wx:if="{{totalReviewCount > 0}}">
+      <text class="review-entry-icon">💬</text>
+      <text class="review-entry-label">用户评价 ({{totalReviewCount}})</text>
+      <text class="review-entry-more">查看全部评价 ›</text>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 规格参数 -->
+  <view class="spec-block">
+    <text class="block-title">规格参数</text>
+    <view class="spec-row">
+      <text class="spec-key">设计师</text>
+      <text class="spec-val">{{product.designer}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">材　质</text>
+      <text class="spec-val">{{product.material}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">尺　寸</text>
+      <text class="spec-val">{{product.size}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">重　量</text>
+      <text class="spec-val">{{product.weight}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">分　类</text>
+      <text class="spec-val">{{product.categoryName}}</text>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 数量选择 -->
+  <view class="qty-block">
+    <text class="block-title-inline">购买数量</text>
+    <view class="qty-ctrl">
+      <view class="qty-btn" bindtap="onQuantityMinus">
+        <text class="qty-symbol">−</text>
+      </view>
+      <text class="qty-num">{{quantity}}</text>
+      <view class="qty-btn" bindtap="onQuantityPlus">
+        <text class="qty-symbol">+</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 运费说明 -->
+  <view class="shipping-bar">
+    <text class="shipping-icon">🚚</text>
+    <text class="shipping-text" wx:if="{{shippingCfg.freeThreshold > 0}}">
+      运费 ¥{{shippingCfg.baseFee}} · 满¥{{shippingCfg.freeThreshold}}免运费
+    </text>
+    <text class="shipping-text" wx:else>免运费</text>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 评论 -->
+  <view class="reviews-block">
+    <view class="block-title-row">
+      <text class="block-title">评论</text>
+      <view class="rv-header-right" bindtap="onGoAllReviews">
+        <text class="rv-count-label" wx:if="{{totalReviewCount > 0}}">{{totalReviewCount}}条好评</text>
+        <text class="rv-arrow">›</text>
+      </view>
+    </view>
+    <view wx:if="{{reviews.length === 0}}" class="rv-empty">
+      <text class="rv-empty-text">暂无评论</text>
+    </view>
+    <view class="rv-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="rv-head">
+        <view class="rv-avatar-bg">
+          <text class="rv-avatar-icon">{{item.avatar || '🙂'}}</text>
+        </view>
+        <view class="rv-meta">
+          <text class="rv-user">{{item.username || '匿名用户'}}</text>
+          <view class="rv-stars-row">
+            <text class="rv-star {{s ? 'rv-star-on' : 'rv-star-off'}}" wx:for="{{item.stars}}" wx:for-item="s" wx:key="index">★</text>
+          </view>
+        </view>
+        <text class="rv-date">{{item.dateStr}}</text>
+      </view>
+      <text class="rv-content">{{item.content}}</text>
+    </view>
+  </view>
+
+  <!-- 商品描述 -->
+  <view class="sep"></view>
+  <view class="desc-block">
+    <text class="block-title">商品详情</text>
+    <text class="desc-text">{{product.description}}</text>
+    <view class="desc-images" wx:if="{{product.descImages && product.descImages.length > 0}}">
+      <image
+        wx:for="{{product.descImages}}"
+        wx:key="index"
+        src="{{item}}"
+        mode="widthFix"
+        class="desc-img"
+        bindtap="onPreviewDescImage"
+        data-src="{{item}}"
+        data-index="{{index}}"
+      />
+    </view>
+  </view>
+
+  <view class="scroll-bottom"></view>
+</scroll-view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar" wx:if="{{product}}">
+  <view class="bar-btns">
+    <button class="btn-cart" bindtap="onAddToCart">加入购物车</button>
+    <button class="btn-buy" bindtap="onBuyNow">立即购买</button>
+  </view>
+  <view class="safe-area"></view>
+</view>
+
+<!-- 支付弹窗遮罩 -->
+<view class="modal-mask" wx:if="{{product && showBuyModal}}" bindtap="onCloseModal"></view>
+
+<!-- 支付弹窗 -->
+<view class="pay-modal" wx:if="{{product && showBuyModal}}">
+  <view class="modal-drag-bar" bindtouchstart="onModalDragStart" bindtouchend="onModalDragEnd"></view>
+  <view class="modal-hd">
+    <text class="modal-title">确认支付</text>
+    <view class="modal-close-btn" bindtap="onCloseModal">✕</view>
+  </view>
+
+  <scroll-view scroll-y class="modal-scroll-body">
+    <view class="modal-product-row">
+      <image src="{{product.images[0] || product.image}}" mode="aspectFill" class="modal-thumb" />
+      <view class="modal-prod-info">
+        <text class="modal-prod-name">{{product.name}}</text>
+        <text class="modal-prod-spec">{{product.material}}</text>
+        <text class="modal-prod-unit-price">¥{{product.price}} / 件</text>
+      </view>
+    </view>
+
+    <!-- SKU 规格选择 -->
+    <view class="modal-sku-section" wx:if="{{product.skuOptions && product.skuOptions.length > 0}}">
+      <view class="modal-sku-group" wx:for="{{product.skuOptions}}" wx:key="name">
+        <text class="modal-sku-label">{{item.name}}</text>
+        <view class="modal-sku-chips">
+          <view
+            class="modal-sku-chip {{selectedSku[item.name] === v ? 'modal-sku-chip-on' : ''}}"
+            wx:for="{{item.values}}"
+            wx:for-item="v"
+            wx:key="index"
+            bindtap="onSelectSku"
+            data-group="{{item.name}}"
+            data-val="{{v}}"
+          >{{v}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 件数选择 -->
+    <view class="modal-qty-row">
+      <text class="modal-qty-label">数量</text>
+      <view class="modal-qty-ctrl">
+        <view class="modal-qty-btn {{quantity <= 1 ? 'modal-qty-btn-dim' : ''}}" bindtap="onQuantityMinus">−</view>
+        <text class="modal-qty-num">{{quantity}}</text>
+        <view class="modal-qty-btn" bindtap="onQuantityPlus">+</view>
+      </view>
+    </view>
+
+    <!-- 小计 -->
+    <view class="modal-amount-row">
+      <text class="modal-amount-label">商品合计</text>
+      <text class="modal-amount">¥{{totalAmount}}</text>
+    </view>
+
+    <!-- 礼品包装选项 -->
+    <view class="gift-bag-row" bindtap="onToggleGiftBag">
+      <view class="gift-bag-left">
+        <text class="gift-bag-icon">🎁</text>
+        <view class="gift-bag-info">
+          <text class="gift-bag-name">礼品包装</text>
+          <text class="gift-bag-tip">精美礼品袋 · 送人更有心意</text>
+        </view>
+      </view>
+      <view class="gift-bag-right">
+        <view class="gift-toggle {{addGiftBag ? 'on' : ''}}">
+          <view class="gift-toggle-ball"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 礼品袋商品卡（开启后展开） -->
+    <view class="modal-gift-products" wx:if="{{addGiftBag && giftProducts.length > 0}}">
+      <view class="modal-gift-hd">
+        <text class="modal-gift-title">选择礼品袋款式</text>
+        <text class="modal-gift-sub">点击查看详情</text>
+      </view>
+      <view class="modal-gift-item" wx:for="{{giftProducts}}" wx:key="id">
+        <image class="modal-gift-img" src="{{item.image}}" mode="aspectFill" bindtap="onDetailGiftProductTap" data-id="{{item.id}}" />
+        <view class="modal-gift-info" bindtap="onDetailGiftProductTap" data-id="{{item.id}}">
+          <text class="modal-gift-name">{{item.name}}</text>
+          <text class="modal-gift-material">{{item.material}}</text>
+        </view>
+        <view class="modal-gift-right">
+          <text class="modal-gift-price">¥{{item.price}}</text>
+          <view class="modal-gift-add-btn" catchtap="onDetailGiftProductAdd" data-id="{{item.id}}">
+            <text class="modal-gift-add-icon">+</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 已选礼品清单 -->
+    <view class="modal-gift-cart" wx:if="{{addGiftBag && giftItems.length > 0}}">
+      <view class="modal-gift-cart-hd">
+        <text class="modal-gift-cart-title">已选礼品</text>
+        <text class="modal-gift-cart-sub">合计 ¥{{giftTotal}}</text>
+      </view>
+      <view class="mgs-item" wx:for="{{giftItems}}" wx:key="id">
+        <image class="mgs-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="mgs-info">
+          <text class="mgs-name">{{item.name}}</text>
+          <text class="mgs-price">¥{{item.price}}</text>
+        </view>
+        <view class="mgs-ctrl">
+          <view class="mgs-btn" catchtap="onGiftItemMinus" data-index="{{index}}">−</view>
+          <text class="mgs-num">{{item.quantity}}</text>
+          <view class="mgs-btn" catchtap="onGiftItemPlus" data-index="{{index}}">+</view>
+        </view>
+        <view class="mgs-del" catchtap="onGiftItemRemove" data-index="{{index}}">✕</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="pay-options">
+    <view class="pay-opt active">
+      <text class="pay-opt-icon">💚</text>
+      <text class="pay-opt-name">微信支付</text>
+      <text class="pay-opt-check">✓</text>
+    </view>
+  </view>
+
+  <text class="pay-dev-tip">（开发阶段·模拟支付）</text>
+  <button class="pay-confirm" bindtap="onSimulatePay">确认支付  ¥{{totalAmount}}</button>
+  <view class="safe-area"></view>
+</view>
+
+<!-- 商品加载失败 -->
+<view class="page-error" wx:if="{{!product}}">
+  <text class="error-icon">🔍</text>
+  <text class="error-text">商品信息不存在</text>
+  <view class="error-back" bindtap="onBack">返回</view>
+</view>

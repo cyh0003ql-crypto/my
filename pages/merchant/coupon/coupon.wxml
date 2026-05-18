@@ -1,0 +1,121 @@
+<view class="page">
+  <scroll-view scroll-y class="scroll-body">
+    <view class="top-bar">
+      <text class="top-title">优惠券管理</text>
+      <view class="add-btn" bindtap="onAddCoupon">+ 新建优惠券</view>
+    </view>
+
+    <view wx:if="{{coupons.length === 0}}" class="empty-state">
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">还没有创建任何优惠券</text>
+    </view>
+
+    <view wx:else class="coupon-list">
+      <view class="coupon-card" wx:for="{{coupons}}" wx:key="id">
+        <view class="coupon-head">
+          <view class="coupon-name-row">
+            <text class="coupon-name">{{item.title}}</text>
+            <view class="badge-row">
+              <view class="status-badge newbie" wx:if="{{item.isNewbie}}">新人专享</view>
+              <view class="status-badge public" wx:if="{{item.isPublic && item.status === 'active'}}">可领取</view>
+              <view class="status-badge {{item.status}}">
+                {{item.status === 'active' ? '生效中' : '已停用'}}
+              </view>
+            </view>
+          </view>
+          <text class="coupon-desc">
+            {{item.type === 'fixed' ? '满' + item.minAmount + '减' + item.discount + '元' : item.discount + '折优惠' + (item.minAmount > 0 ? '（满' + item.minAmount + '可用）' : '（无门槛）')}}
+          </text>
+        </view>
+        <view class="coupon-meta">
+          <view class="meta-item">
+            <text class="meta-label">总发放量</text>
+            <text class="meta-val">{{item.totalCount}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">已领取</text>
+            <text class="meta-val">{{item.claimedCount || 0}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">已使用</text>
+            <text class="meta-val">{{item.usedCount}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">有效期至</text>
+            <text class="meta-val">{{item.expiresAt}}</text>
+          </view>
+        </view>
+        <view class="coupon-actions" wx:if="{{item.status === 'active'}}">
+          <view class="action-btn danger" catchtap="onDisable" data-id="{{item.id}}">停用</view>
+        </view>
+      </view>
+    </view>
+
+    <view style="height:60rpx;"></view>
+  </scroll-view>
+
+  <!-- 新建弹窗 -->
+  <view class="modal-mask" wx:if="{{showForm}}" bindtap="onCloseForm"></view>
+  <view class="form-modal" wx:if="{{showForm}}">
+    <view class="modal-hd">
+      <text class="modal-title">新建优惠券</text>
+      <view class="close-btn" bindtap="onCloseForm">✕</view>
+    </view>
+
+    <scroll-view scroll-y class="modal-scroll">
+      <view class="field-row">
+        <text class="field-label">名　称</text>
+        <input class="field-input" placeholder="优惠券名称" value="{{form.title}}" bindinput="onTitleInput" maxlength="20" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">类　型</text>
+        <picker mode="selector" range="{{['满减券','折扣券']}}" bindchange="onTypeChange">
+          <view class="picker-val">{{form.type === 'fixed' ? '满减券' : '折扣券'}} ›</view>
+        </picker>
+      </view>
+      <view class="field-row">
+        <text class="field-label">{{form.type === 'fixed' ? '减免金额' : '折扣（9=九折）'}}</text>
+        <input class="field-input" placeholder="数字" type="number" value="{{form.discount}}" bindinput="onDiscountInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">最低消费</text>
+        <input class="field-input" placeholder="0 表示无门槛" type="number" value="{{form.minAmount}}" bindinput="onMinAmountInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">发放数量</text>
+        <input class="field-input" placeholder="总发放张数" type="number" value="{{form.totalCount}}" bindinput="onTotalCountInput" />
+      </view>
+      <view class="field-row">
+        <text class="field-label">有效期至</text>
+        <input class="field-input" placeholder="格式：2026-12-31" value="{{form.expiresAt}}" bindinput="onExpiresAtInput" />
+      </view>
+
+      <!-- 发放方式 -->
+      <view class="toggle-section">
+        <view class="toggle-row" bindtap="onTogglePublic">
+          <view class="toggle-info">
+            <text class="toggle-label">公开领取</text>
+            <text class="toggle-desc">开启后用户可在「我的优惠券」中主动领取</text>
+          </view>
+          <view class="toggle-ctrl {{form.isPublic ? 'on' : ''}}">
+            <view class="toggle-ball"></view>
+          </view>
+        </view>
+        <view class="toggle-row" bindtap="onToggleNewbie">
+          <view class="toggle-info">
+            <text class="toggle-label">新人专享</text>
+            <text class="toggle-desc">开启后仅对首次登录的新用户自动弹出领取提醒</text>
+          </view>
+          <view class="toggle-ctrl {{form.isNewbie ? 'on' : ''}}">
+            <view class="toggle-ball"></view>
+          </view>
+        </view>
+      </view>
+
+      <button class="save-coupon-btn {{isSaving ? 'saving' : ''}}" bindtap="onSaveCoupon" disabled="{{isSaving}}">
+        {{isSaving ? '创建中...' : '创建优惠券'}}
+      </button>
+      <view style="height:40rpx;"></view>
+    </scroll-view>
+  </view>
+</view>

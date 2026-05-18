@@ -1,0 +1,152 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">{{isEdit ? '编辑商品' : '添加商品'}}</view>
+
+  <!-- 商品多图（最多9张） -->
+  <view class="form-section">
+    <text class="section-label">商品图片（最多9张）</text>
+    <view class="img-grid">
+      <view class="img-thumb" wx:for="{{form.images}}" wx:key="index" bindtap="onPreviewImage" data-index="{{index}}">
+        <image src="{{item}}" mode="aspectFill" class="thumb-img" />
+        <view class="thumb-del" catchtap="onDeleteImage" data-index="{{index}}">✕</view>
+        <view class="thumb-cover" wx:if="{{index === 0}}"><text class="cover-label">封面</text></view>
+      </view>
+      <view class="img-add" wx:if="{{form.images.length < 9}}" bindtap="onChooseImages">
+        <text class="add-icon">＋</text>
+        <text class="add-tip">{{form.images.length}}/9</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="form-section">
+    <text class="section-label">基本信息</text>
+    <view class="form-group">
+      <view class="field"><text class="f-label">名称 *</text><input class="f-input" placeholder="商品名称" value="{{form.name}}" bindinput="onInput" data-field="name" /></view>
+      <view class="field"><text class="f-label">设计师</text><input class="f-input" placeholder="设计师/品牌" value="{{form.designer}}" bindinput="onInput" data-field="designer" /></view>
+      <view class="field">
+        <text class="f-label">分类 *</text>
+        <picker mode="selector" range="{{categoryNames}}" bindchange="onCategoryChange">
+          <text class="picker-val">{{form.categoryName}} ›</text>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!-- 新增品类面板 -->
+  <view class="form-section" wx:if="{{showNewCatPanel}}">
+    <text class="section-label">新增品类</text>
+    <view class="new-cat-wrap">
+      <input class="new-cat-input" placeholder="品类名称（如：陶瓷器皿）" bindinput="onNewCatInput" confirm-type="done" />
+      <view class="new-cat-btns">
+        <view class="new-cat-cancel" bindtap="onCancelNewCat">取消</view>
+        <view class="new-cat-confirm" bindtap="onConfirmNewCat">确认添加</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 价格库存 -->
+  <view class="form-section">
+    <text class="section-label">价格与库存</text>
+    <view class="form-group">
+      <view class="field"><text class="f-label">售价 *</text><input class="f-input" type="digit" placeholder="0.00" value="{{form.price}}" bindinput="onInput" data-field="price" /></view>
+      <view class="field"><text class="f-label">原价</text><input class="f-input" type="digit" placeholder="划线原价" value="{{form.originalPrice}}" bindinput="onInput" data-field="originalPrice" /></view>
+      <view class="field"><text class="f-label">库存 *</text><input class="f-input" type="number" placeholder="库存数量" value="{{form.stock}}" bindinput="onInput" data-field="stock" /></view>
+      <view class="field"><text class="f-label">已售件数</text><input class="f-input" type="number" placeholder="已售数量（可手动调整）" value="{{form.soldCount}}" bindinput="onInput" data-field="soldCount" /></view>
+    </view>
+  </view>
+
+  <!-- 规格参数 -->
+  <view class="form-section">
+    <text class="section-label">规格参数</text>
+    <view class="form-group">
+      <view class="field"><text class="f-label">材质</text><input class="f-input" placeholder="如：天然大理石" value="{{form.material}}" bindinput="onInput" data-field="material" /></view>
+      <view class="field"><text class="f-label">尺寸</text><input class="f-input" placeholder="如：16cm×8cm×18cm" value="{{form.size}}" bindinput="onInput" data-field="size" /></view>
+      <view class="field"><text class="f-label">重量</text><input class="f-input" placeholder="如：1.2kg" value="{{form.weight}}" bindinput="onInput" data-field="weight" /></view>
+    </view>
+  </view>
+
+  <!-- SKU 规格选项 -->
+  <view class="form-section">
+    <view class="sku-section-hd">
+      <text class="section-label">规格选项 SKU</text>
+      <view class="sku-add-btn" bindtap="onAddSkuGroup">＋ 添加规格</view>
+    </view>
+    <view wx:if="{{form.skuGroups.length > 0}}">
+      <view class="sku-group-edit" wx:for="{{form.skuGroups}}" wx:key="index">
+        <view class="sku-group-row">
+          <input class="sku-name-input" placeholder="规格名称（如：颜色）" value="{{item.name}}" bindinput="onSkuNameInput" data-idx="{{index}}" />
+          <view class="sku-del-btn" catchtap="onRemoveSkuGroup" data-idx="{{index}}">✕</view>
+        </view>
+        <input class="sku-vals-input" placeholder="选项（逗号分隔，如：红色,蓝色,白色）" value="{{item.valuesStr}}" bindinput="onSkuValsInput" data-idx="{{index}}" />
+
+        <!-- SKU 规格值预览 + 独立图片上传 -->
+        <view wx:if="{{item.valsList && item.valsList.length > 0}}">
+          <text class="sku-vals-preview-label">选项预览</text>
+          <view class="sku-chips-preview">
+            <text class="sku-chip-preview" wx:for="{{item.valsList}}" wx:for-item="v" wx:key="v">{{v}}</text>
+          </view>
+          <text class="sku-img-map-label">关联图片（可选，每个选项可上传一张）</text>
+          <view class="sku-img-val-grid">
+            <view class="sku-val-img-item" wx:for="{{item.valsList}}" wx:for-item="val" wx:for-index="valIdx" wx:key="valIdx">
+              <text class="sku-val-tag">{{val}}</text>
+              <view wx:if="{{form.skuValueImages[item.name + ':' + val]}}">
+                <view class="sku-linked-img-wrap" catchtap="onRemoveSkuValueImage" data-group="{{item.name}}" data-val="{{val}}">
+                  <image src="{{form.skuValueImages[item.name + ':' + val]}}" mode="aspectFill" class="sku-linked-img" />
+                  <view class="sku-img-del-overlay">✕</view>
+                </view>
+              </view>
+              <view wx:else class="sku-img-upload-btn" catchtap="onSkuValueImageUpload" data-group="{{item.name}}" data-val="{{val}}">
+                <text class="sku-img-upload-icon">＋</text>
+                <text class="sku-img-upload-text">上传图片</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sku-empty-hint" wx:else>
+      <text class="sku-empty-text">未设置规格，用户将直接购买</text>
+    </view>
+  </view>
+
+  <!-- 商品描述 -->
+  <view class="form-section">
+    <text class="section-label">商品描述</text>
+    <view class="desc-wrap">
+      <textarea class="desc-input" placeholder="商品详细描述..." value="{{form.description}}" bindinput="onInput" data-field="description" />
+    </view>
+  </view>
+
+  <!-- 描述图片 -->
+  <view class="form-section">
+    <text class="section-label">描述图片（可选，最多6张）</text>
+    <view class="img-grid">
+      <view class="img-thumb" wx:for="{{form.descImages}}" wx:key="index" bindtap="onPreviewDescImage" data-index="{{index}}">
+        <image src="{{item}}" mode="aspectFill" class="thumb-img" />
+        <view class="thumb-del" catchtap="onDeleteDescImage" data-index="{{index}}">✕</view>
+      </view>
+      <view class="img-add" wx:if="{{form.descImages.length < 6}}" bindtap="onChooseDescImages">
+        <text class="add-icon">＋</text>
+        <text class="add-tip">{{form.descImages.length}}/6</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标签设置 -->
+  <view class="form-section">
+    <text class="section-label">标签设置</text>
+    <view class="form-group">
+      <view class="field toggle-field" bindtap="onToggle" data-field="isNew">
+        <text class="f-label">标记新品</text>
+        <view class="toggle {{form.isNew ? 'on' : ''}}"><view class="toggle-ball"></view></view>
+      </view>
+      <view class="field toggle-field" bindtap="onToggle" data-field="isFeatured">
+        <text class="f-label">精选推荐</text>
+        <view class="toggle {{form.isFeatured ? 'on' : ''}}"><view class="toggle-ball"></view></view>
+      </view>
+    </view>
+  </view>
+
+  <button class="save-btn" bindtap="onSave">{{isEdit ? '保存修改' : '发布商品'}}</button>
+  <view style="height:60rpx;"></view>
+</scroll-view>

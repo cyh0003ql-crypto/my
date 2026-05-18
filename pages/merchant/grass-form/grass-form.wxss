@@ -1,0 +1,89 @@
+page { background: #F5EFE6; }
+.page { background: #F5EFE6; min-height: 100vh; padding: 0 0 40rpx; }
+.page-title { font-size: 34rpx; font-weight: 700; color: #2C1A0E; padding: 32rpx 32rpx 20rpx; }
+
+.form-section { padding: 0 32rpx 24rpx; }
+.f-label { font-size: 26rpx; color: #5A4535; display: block; margin-bottom: 12rpx; font-weight: 500; }
+.form-group {
+  background: #FFFFFF; border-radius: 16rpx;
+  overflow: hidden; border: 1rpx solid #EDE5D8;
+}
+.f-input { width: 100%; padding: 24rpx 24rpx; font-size: 28rpx; color: #2C1A0E; box-sizing: border-box; height: 80rpx; line-height: 80rpx; }
+.textarea-group { padding: 20rpx 24rpx; }
+.f-textarea { width: 100%; font-size: 28rpx; color: #2C1A0E; min-height: 160rpx; line-height: 1.7; }
+
+.img-pick-row { display: flex; align-items: center; gap: 20rpx; flex-wrap: wrap; }
+.img-preview { width: 160rpx; height: 200rpx; border-radius: 12rpx; }
+.img-pick-btn {
+  background: #EDE5D8; border-radius: 12rpx;
+  width: 160rpx; height: 100rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+.img-pick-text { font-size: 26rpx; color: #5A4535; }
+
+.tips-block {
+  margin: 0 32rpx 24rpx;
+  background: #FEF8F0; border-radius: 16rpx; padding: 20rpx;
+  border: 1rpx solid #F5E8D4;
+}
+.tip-text { font-size: 24rpx; color: #9C8672; }
+
+.save-btn {
+  margin: 8rpx 32rpx;
+  background: #2C1A0E; color: #F5EFE6;
+  border-radius: 48rpx; font-size: 32rpx;
+  font-weight: 500; padding: 28rpx 0; width: calc(100% - 64rpx);
+  text-align: center; border: none; line-height: 1;
+}
+.save-btn::after { border: none; }
+
+/* ── 关联商品选择器字段 ── */
+.prod-picker-field {
+  background: #FFFFFF; border-radius: 16rpx;
+  border: 1rpx solid #EDE5D8; padding: 0 24rpx;
+  min-height: 80rpx; display: flex; align-items: center;
+}
+.prod-picker-placeholder { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.prod-picker-tip { font-size: 28rpx; color: #C0B8AE; }
+.prod-picker-arrow { font-size: 32rpx; color: #C0B8AE; }
+.prod-picked-row { display: flex; align-items: center; gap: 12rpx; width: 100%; padding: 20rpx 0; }
+.prod-picked-name { flex: 1; font-size: 28rpx; color: #2C1A0E; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prod-picked-id { font-size: 20rpx; color: #FFFFFF; background: #8B7961; padding: 3rpx 10rpx; border-radius: 8rpx; flex-shrink: 0; }
+.prod-picked-clear { font-size: 28rpx; color: #C0B8AE; padding: 4rpx 8rpx; flex-shrink: 0; }
+
+/* ── 商品选择器弹窗 ── */
+.picker-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,26,14,0.45); z-index: 100;
+}
+.picker-modal {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #F5EFE6; border-radius: 32rpx 32rpx 0 0;
+  padding: 0 32rpx; z-index: 101; max-height: 75vh;
+  display: flex; flex-direction: column;
+}
+.picker-drag-bar {
+  width: 80rpx; height: 8rpx; background: #D2C8BB;
+  border-radius: 4rpx; margin: 20rpx auto 0; flex-shrink: 0;
+}
+.picker-hd {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20rpx 0 16rpx; flex-shrink: 0;
+  border-bottom: 1rpx solid #EDE5D8;
+}
+.picker-title { font-size: 32rpx; font-weight: 600; color: #2C1A0E; }
+.picker-close { font-size: 32rpx; color: #8B7961; padding: 8rpx; }
+.picker-list { flex: 1; overflow: hidden; padding: 12rpx 0; }
+.picker-item {
+  display: flex; align-items: center; gap: 20rpx;
+  background: #FFFFFF; border-radius: 16rpx; padding: 20rpx;
+  margin-bottom: 12rpx; border: 2rpx solid transparent;
+}
+.picker-item.selected { border-color: #2C1A0E; }
+.picker-img { width: 88rpx; height: 88rpx; border-radius: 10rpx; background: #EAE6E0; flex-shrink: 0; }
+.picker-info { flex: 1; min-width: 0; }
+.picker-name { display: block; font-size: 28rpx; color: #2C1A0E; font-weight: 500; margin-bottom: 10rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.picker-meta { display: flex; align-items: center; gap: 12rpx; }
+.picker-price { font-size: 26rpx; color: #C87941; font-weight: 600; }
+.picker-id-tag { font-size: 20rpx; color: #FFFFFF; background: #8B7961; padding: 3rpx 10rpx; border-radius: 8rpx; }
+.picker-check { font-size: 32rpx; color: #2C1A0E; font-weight: 700; flex-shrink: 0; }

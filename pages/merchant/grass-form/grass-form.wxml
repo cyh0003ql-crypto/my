@@ -1,0 +1,101 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">{{isEdit ? '编辑种草卡' : '新增种草卡'}}</view>
+
+  <view class="form-section">
+    <text class="f-label">用户名（@开头）</text>
+    <view class="form-group">
+      <input class="f-input" placeholder="如：@小星星" value="{{initUsername}}" bindinput="onUsernameInput" confirm-type="next" />
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="f-label">标题 *</text>
+    <view class="form-group">
+      <input class="f-input" placeholder="请填写种草卡标题" value="{{initTitle}}" bindinput="onTitleInput" confirm-type="next" />
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="f-label">正文内容 *</text>
+    <view class="form-group textarea-group">
+      <textarea class="f-textarea" placeholder="分享创作心得..." value="{{initContent}}" bindinput="onContentInput" auto-height />
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="f-label">标签（英文逗号分隔）</text>
+    <view class="form-group">
+      <input class="f-input" placeholder="如：拼豆,手作,送礼" value="{{initTags}}" bindinput="onTagsInput" confirm-type="next" />
+    </view>
+  </view>
+
+  <!-- 关联商品（点击弹出选择器） -->
+  <view class="form-section">
+    <text class="f-label">关联商品（选填）</text>
+    <view class="prod-picker-field" bindtap="onOpenProductPicker">
+      <view wx:if="{{linkedProductName}}" class="prod-picked-row">
+        <text class="prod-picked-name">{{linkedProductName}}</text>
+        <text class="prod-picked-id">{{initProductId}}</text>
+        <text class="prod-picked-clear" catchtap="onClearProduct">✕</text>
+      </view>
+      <view wx:else class="prod-picker-placeholder">
+        <text class="prod-picker-tip">点击选择商品</text>
+        <text class="prod-picker-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="f-label">主图 *</text>
+    <view class="img-pick-row">
+      <image wx:if="{{imgPreview}}" src="{{imgPreview}}" mode="aspectFill" class="img-preview" />
+      <view class="img-pick-btn" bindtap="onPickImage">
+        <text class="img-pick-text">{{imgPreview ? '更换图片' : '＋ 上传图片'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="f-label">初始点赞数</text>
+    <view class="form-group">
+      <input class="f-input" type="number" placeholder="0" value="{{initLikeCount}}" bindinput="onLikeCountInput" confirm-type="done" />
+    </view>
+  </view>
+
+  <view class="tips-block">
+    <text class="tip-text">💡 图片建议竖版（4:5比例），展示效果更佳</text>
+  </view>
+
+  <button class="save-btn" bindtap="onSave">保存发布</button>
+  <view style="height:60rpx;"></view>
+</scroll-view>
+
+<!-- 商品选择器弹窗 -->
+<view class="picker-mask" wx:if="{{showProductPicker}}" bindtap="onCloseProductPicker"></view>
+<view class="picker-modal" wx:if="{{showProductPicker}}" catchtouchmove="preventBubble">
+  <view class="picker-drag-bar"></view>
+  <view class="picker-hd">
+    <text class="picker-title">选择关联商品</text>
+    <text class="picker-close" bindtap="onCloseProductPicker">✕</text>
+  </view>
+  <scroll-view scroll-y class="picker-list" style="height:55vh;">
+    <view
+      class="picker-item {{initProductId === item.id ? 'selected' : ''}}"
+      wx:for="{{allProducts}}"
+      wx:key="id"
+      bindtap="onSelectProduct"
+      data-id="{{item.id}}"
+      data-name="{{item.name}}"
+    >
+      <image class="picker-img" src="{{item.image}}" mode="aspectFill" />
+      <view class="picker-info">
+        <text class="picker-name">{{item.name}}</text>
+        <view class="picker-meta">
+          <text class="picker-price">¥{{item.price}}</text>
+          <text class="picker-id-tag">{{item.id}}</text>
+        </view>
+      </view>
+      <view class="picker-check" wx:if="{{initProductId === item.id}}">✓</view>
+    </view>
+  </scroll-view>
+</view>

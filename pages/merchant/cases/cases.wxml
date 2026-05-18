@@ -1,0 +1,53 @@
+<scroll-view scroll-y class="page">
+  <view class="m-header">
+    <text class="m-title">参考案例管理</text>
+    <view class="add-btn" bindtap="onAddCase">+ 添加案例</view>
+  </view>
+
+  <view class="empty" wx:if="{{cases.length === 0}}">
+    <text class="empty-icon">🖼️</text>
+    <text class="empty-text">暂无参考案例</text>
+    <text class="empty-sub">添加案例后顾客可在定制页查看选择</text>
+  </view>
+
+  <view class="case-grid">
+    <view class="case-card" wx:for="{{cases}}" wx:key="id">
+      <image class="case-img" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}" bindtap="onPreview" data-src="{{item.image}}" />
+      <view class="case-no-img" wx:else>
+        <text>无图片</text>
+      </view>
+      <view class="case-info">
+        <text class="case-name">{{item.name}}</text>
+        <text class="case-price" wx:if="{{item.price}}">参考价 ¥{{item.price}}</text>
+        <text class="case-desc" wx:if="{{item.description}}">{{item.description}}</text>
+      </view>
+      <view class="case-del" bindtap="onDeleteCase" data-id="{{item.id}}">删除</view>
+    </view>
+  </view>
+
+  <!-- 添加案例弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="onCloseModal" />
+  <view class="modal" wx:if="{{showModal}}">
+    <text class="modal-title">添加参考案例</text>
+    <scroll-view scroll-y class="modal-scroll-body">
+      <view class="modal-img-area" bindtap="onPickImage">
+        <image class="modal-preview-img" src="{{newCase.image}}" mode="aspectFill" wx:if="{{newCase.image}}" />
+        <view class="modal-img-placeholder" wx:else>
+          <text class="modal-img-icon">📷</text>
+          <text class="modal-img-tip">点击上传案例图片</text>
+        </view>
+      </view>
+
+      <input class="modal-input" placeholder="案例名称（必填）" value="{{newCase.name}}" bindinput="onNameInput" maxlength="30" />
+      <input class="modal-input" placeholder="参考价格（选填，如：680）" value="{{newCase.price}}" bindinput="onPriceInput" type="digit" />
+      <textarea class="modal-textarea" placeholder="案例描述（选填）" value="{{newCase.description}}" bindinput="onDescInput" maxlength="200" auto-height />
+    </scroll-view>
+
+    <view class="modal-btns">
+      <view class="modal-cancel" bindtap="onCloseModal" catchtap="onCloseModal">取消</view>
+      <view class="modal-confirm" bindtap="onConfirmAdd" catchtap="onConfirmAdd">确认添加</view>
+    </view>
+  </view>
+
+  <view style="height:80rpx;"></view>
+</scroll-view>

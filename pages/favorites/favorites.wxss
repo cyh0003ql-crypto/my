@@ -1,0 +1,19 @@
+.page { background: #F6F3EF; min-height: 100vh; }
+.fav-scroll { height: 100vh; }
+.fav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20rpx; padding: 24rpx; }
+.fav-card { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; box-shadow: 0 2rpx 12rpx rgba(58,51,45,0.06); }
+.fav-img-wrap { position: relative; }
+.fav-img { width: 100%; height: 280rpx; display: block; background: #EAE6E0; }
+.remove-btn {
+  position: absolute; top: 16rpx; right: 16rpx;
+  font-size: 40rpx; line-height: 1;
+}
+.fav-info { padding: 16rpx 20rpx 20rpx; }
+.fav-name { font-size: 26rpx; color: #3A332D; display: block; margin-bottom: 12rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fav-bottom { display: flex; align-items: center; justify-content: space-between; }
+.fav-price { font-size: 30rpx; font-weight: 600; color: #8B7961; }
+.cart-btn { width: 48rpx; height: 48rpx; background: #3A332D; border-radius: 50%; text-align: center; line-height: 48rpx; color: #F6F3EF; font-size: 32rpx; font-weight: 300; }
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 160rpx 32rpx; }
+.empty-icon { font-size: 100rpx; margin-bottom: 24rpx; opacity: 0.4; }
+.empty-text { font-size: 28rpx; color: #8B7961; margin-bottom: 40rpx; }
+.go-btn { background: #3A332D; color: #F6F3EF; font-size: 28rpx; padding: 20rpx 60rpx; border-radius: 48rpx; }

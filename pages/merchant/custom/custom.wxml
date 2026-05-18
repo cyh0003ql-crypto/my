@@ -1,0 +1,108 @@
+<scroll-view scroll-y class="page">
+  <view class="m-header">
+    <text class="m-title">定制需求列表</text>
+    <text class="m-count">共 {{requests.length}} 条</text>
+  </view>
+
+  <view class="empty" wx:if="{{requests.length === 0}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无定制需求</text>
+    <text class="empty-sub">顾客提交定制后将在此显示</text>
+  </view>
+
+  <view class="request-card" wx:for="{{requests}}" wx:key="id">
+    <!-- 头部：ID + 状态 -->
+    <view class="card-head">
+      <text class="req-id">{{item.id}}</text>
+      <view class="status-tag {{item.status}}">
+        <text>{{item.status === 'pending' ? '待处理' : item.status === 'processing' ? '处理中' : '已完成'}}</text>
+      </view>
+    </view>
+
+    <!-- 用户信息 -->
+    <view class="info-section">
+      <text class="info-label">下单用户</text>
+      <view class="user-row">
+        <text class="user-name">{{item.userName || '匿名用户'}}</text>
+        <text class="user-phone" wx:if="{{item.userPhone}}">{{item.userPhone}}</text>
+      </view>
+    </view>
+
+    <!-- 提交时间 -->
+    <view class="info-section">
+      <text class="info-label">提交时间</text>
+      <text class="info-val">{{item.createdAtFmt}}</text>
+    </view>
+
+    <!-- 文字描述 -->
+    <view class="info-section" wx:if="{{item.description}}">
+      <text class="info-label">需求描述</text>
+      <text class="info-val desc">{{item.description}}</text>
+    </view>
+
+    <!-- 尺寸要求 -->
+    <view class="info-section" wx:if="{{item.size}}">
+      <text class="info-label">尺寸要求</text>
+      <text class="info-val">{{item.size}}</text>
+    </view>
+
+    <!-- 上传图片 -->
+    <view class="info-section" wx:if="{{item.images.length > 0}}">
+      <text class="info-label">顾客上传图片（{{item.images.length}}张）</text>
+      <scroll-view scroll-x class="img-scroll">
+        <image class="req-img" src="{{img}}" mode="aspectFill" bindtap="onPreview" data-src="{{img}}" data-list="{{item.images}}" wx:for="{{item.images}}" wx:for-item="img" wx:key="index" />
+      </scroll-view>
+    </view>
+
+    <!-- 参考案例 -->
+    <view class="info-section" wx:if="{{item.selectedCaseNames && item.selectedCaseNames.length > 0}}">
+      <text class="info-label">选择的参考案例</text>
+      <text class="info-val">{{item.selectedCaseNames.join('、')}}</text>
+    </view>
+
+    <!-- 商家回复区 -->
+    <view class="reply-section">
+      <!-- 已有回复 -->
+      <view class="reply-bubble" wx:if="{{item.merchantReply}}">
+        <text class="reply-bubble-label">商家回复</text>
+        <text class="reply-bubble-text">{{item.merchantReply}}</text>
+        <text class="reply-bubble-time">{{item.replyAt}}</text>
+        <view class="reply-edit-btn" bindtap="onStartReply" data-id="{{item.id}}" data-existing="{{item.merchantReply}}">修改回复</view>
+      </view>
+
+      <!-- 回复输入框（展开时） -->
+      <view class="reply-input-area" wx:if="{{replyingId === item.id}}">
+        <textarea
+          class="reply-textarea"
+          style="color:#2C1A0E;font-size:26rpx;"
+          placeholder="输入回复内容..."
+          placeholder-class="reply-placeholder"
+          value="{{replyText}}"
+          bindinput="onReplyInput"
+          maxlength="500"
+          auto-height
+          focus="{{replyingId === item.id}}"
+        />
+        <view class="reply-btns">
+          <view class="reply-cancel" catchtap="onCancelReply">取消</view>
+          <view class="reply-send" catchtap="onSendReply" data-id="{{item.id}}">发送回复</view>
+        </view>
+      </view>
+
+      <!-- 无回复 + 未在回复中 -->
+      <view class="reply-trigger" wx:elif="{{!item.merchantReply}}" bindtap="onStartReply" data-id="{{item.id}}" data-existing="">
+        <text class="reply-trigger-icon">💬</text>
+        <text class="reply-trigger-text">回复顾客</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="act-row">
+      <view class="act-btn call-btn" wx:if="{{item.userPhone}}" bindtap="onCall" data-phone="{{item.userPhone}}">拨打电话</view>
+      <view class="act-btn proc-btn" wx:if="{{item.status === 'pending'}}" bindtap="onProcess" data-id="{{item.id}}">标记处理中</view>
+      <view class="act-btn done-btn" wx:if="{{item.status !== 'completed'}}" bindtap="onDone" data-id="{{item.id}}">标记完成</view>
+    </view>
+  </view>
+
+  <view style="height:80rpx;"></view>
+</scroll-view>

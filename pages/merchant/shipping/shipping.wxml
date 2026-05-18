@@ -1,0 +1,60 @@
+<view class="page">
+  <scroll-view scroll-y class="scroll">
+
+    <view class="tip-card">
+      <text class="tip-icon">ℹ️</text>
+      <text class="tip-text">运费设置将同步影响商品详情页展示和结算页运费计算</text>
+    </view>
+
+    <!-- 基础运费 -->
+    <view class="section-card">
+      <text class="section-title">基础运费</text>
+      <view class="field-row">
+        <text class="field-label">运费金额</text>
+        <view class="field-input-wrap">
+          <text class="field-prefix">¥</text>
+          <input
+            class="field-input"
+            type="digit"
+            value="{{baseFeeStr}}"
+            bindinput="onBaseFeeInput"
+            placeholder="请输入运费金额"
+          />
+        </view>
+      </view>
+      <text class="field-hint">设为 0 表示全场包邮</text>
+    </view>
+
+    <!-- 满免运费 -->
+    <view class="section-card">
+      <text class="section-title">满减免运费</text>
+      <view class="field-row">
+        <text class="field-label">满额门槛</text>
+        <view class="field-input-wrap">
+          <text class="field-prefix">¥</text>
+          <input
+            class="field-input"
+            type="digit"
+            value="{{freeThresholdStr}}"
+            bindinput="onFreeThresholdInput"
+            placeholder="请输入满免门槛"
+          />
+        </view>
+      </view>
+      <text class="field-hint">订单商品金额满此金额时免运费，设为 0 表示不启用满免</text>
+    </view>
+
+    <!-- 预览 -->
+    <view class="preview-card">
+      <text class="preview-title">用户看到的提示</text>
+      <view class="preview-bar">
+        <text class="preview-icon">🚚</text>
+        <text class="preview-text" wx:if="{{freeThresholdStr > 0}}">运费 ¥{{baseFeeStr}} · 满¥{{freeThresholdStr}}免运费</text>
+        <text class="preview-text" wx:else>免运费</text>
+      </view>
+    </view>
+
+    <button class="save-btn" bindtap="onSave">保存设置</button>
+    <view style="height:60rpx;"></view>
+  </scroll-view>
+</view>

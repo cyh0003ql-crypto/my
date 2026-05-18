@@ -1,0 +1,35 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">填写物流信息</view>
+  <view class="page-sub">订单号：{{orderId}}</view>
+
+  <view class="form-section">
+    <text class="section-label">快递公司（选填）</text>
+    <view class="form-group">
+      <input
+        class="f-input"
+        placeholder="如：顺丰、京东快递、中通"
+        bindinput="onCarrierInput"
+        confirm-type="next"
+      />
+    </view>
+  </view>
+
+  <view class="form-section">
+    <text class="section-label">物流单号 *</text>
+    <view class="form-group">
+      <input
+        class="f-input"
+        placeholder="请输入快递单号"
+        bindinput="onNumberInput"
+        confirm-type="done"
+      />
+    </view>
+  </view>
+
+  <view class="tips-block">
+    <text class="tip-text">📦 填写单号后买家可在订单页查看物流状态</text>
+  </view>
+
+  <button class="save-btn" bindtap="onSave">确认发货</button>
+  <view style="height:60rpx;"></view>
+</scroll-view>

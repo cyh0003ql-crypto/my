@@ -1,0 +1,54 @@
+<scroll-view scroll-y class="page" wx:if="{{post}}">
+  <view style="height: {{statusBarHeight}}px; flex-shrink: 0;"></view>
+  <view class="g-nav">
+    <view class="g-back" bindtap="onBack">
+      <text class="g-back-icon">‹</text>
+    </view>
+    <text class="g-nav-title">种草卡</text>
+  </view>
+
+  <view class="hero-wrap">
+    <image src="{{post.image}}" mode="widthFix" class="hero-img" />
+  </view>
+
+  <view class="user-row">
+    <view class="user-avatar">{{post.avatar}}</view>
+    <text class="user-name">@{{post.username}}</text>
+  </view>
+
+  <view class="content-block">
+    <text class="post-title">{{post.title}}</text>
+    <text class="post-location" wx:if="{{post.location}}">{{post.location}}</text>
+    <text class="post-content" wx:if="{{post.content}}">{{post.content}}</text>
+    <view class="tags-row" wx:if="{{post.tags && post.tags.length > 0}}">
+      <text class="g-tag" wx:for="{{post.tags}}" wx:key="index">#{{item}} </text>
+    </view>
+  </view>
+
+  <view class="like-bar">
+    <view class="like-btn {{isLiked ? 'like-btn-active' : ''}}" bindtap="onToggleLike">
+      <text class="like-icon">{{isLiked ? '♥' : '♡'}}</text>
+      <text class="like-count">{{likeCount > 0 ? likeCount : '点赞'}}</text>
+    </view>
+  </view>
+
+  <view class="linked-prod-card" wx:if="{{linkedProduct}}" bindtap="onGoProduct">
+    <image src="{{linkedProduct.image}}" mode="aspectFill" class="lp-img" />
+    <view class="lp-info">
+      <text class="lp-shop">Petit Aura 小铺</text>
+      <text class="lp-name">{{linkedProduct.name}}</text>
+      <view class="lp-bottom">
+        <text class="lp-price">¥{{linkedProduct.price}}</text>
+        <text class="lp-sold" wx:if="{{soldCount > 0}}"> · 已售{{soldCount}}件</text>
+      </view>
+    </view>
+    <view class="lp-btn">去选购</view>
+  </view>
+
+  <view style="height:80rpx;"></view>
+</scroll-view>
+
+<view class="page-error" wx:if="{{!post}}">
+  <text class="err-text">内容不存在</text>
+  <view class="err-back" bindtap="onBack">返回</view>
+</view>

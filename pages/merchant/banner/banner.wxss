@@ -1,0 +1,265 @@
+page {
+  background: #F0ECE6;
+  height: 100%;
+}
+
+.page {
+  min-height: 100vh;
+  background: #F0ECE6;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll {
+  flex: 1;
+}
+
+/* 提示栏 */
+.tips-bar {
+  background: #EDE5D8;
+  padding: 20rpx 32rpx;
+  margin: 24rpx 24rpx 0;
+  border-radius: 16rpx;
+}
+.tips-text { font-size: 24rpx; color: #9C8672; }
+
+/* 广告列表 */
+.banner-list {
+  padding: 20rpx 24rpx 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+.banner-item {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 16rpx rgba(44,26,14,0.07);
+}
+
+/* 预览图 */
+.banner-preview {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.6;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 24rpx 28rpx;
+}
+
+.preview-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2C1A0E;
+  line-height: 1.4;
+}
+
+.banner-index {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  width: 48rpx; height: 48rpx;
+  background: rgba(44,26,14,0.55);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24rpx;
+  color: #F5EFE6;
+  font-weight: 600;
+}
+
+/* 表单 */
+.banner-form {
+  padding: 0 28rpx;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  gap: 16rpx;
+}
+
+.form-label {
+  width: 120rpx;
+  font-size: 26rpx;
+  color: #9C8672;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #2C1A0E;
+  background: #F5EFE6;
+  border-radius: 12rpx;
+  padding: 14rpx 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.form-sep {
+  height: 1rpx;
+  background: #F0EDE8;
+}
+
+/* 图片选择 */
+.img-picker {
+  flex: 1;
+  height: 120rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #F5EFE6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-thumb {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.img-placeholder-icon {
+  font-size: 40rpx;
+  color: #C0B8AE;
+  font-weight: 200;
+}
+
+.img-placeholder-text {
+  font-size: 22rpx;
+  color: #C0B8AE;
+}
+
+/* 操作按钮 */
+.item-actions {
+  display: flex;
+  gap: 16rpx;
+  padding: 20rpx 28rpx 24rpx;
+}
+
+.action-btn {
+  flex: 1;
+  background: #F5EFE6;
+  border-radius: 12rpx;
+  padding: 16rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.disabled {
+  opacity: 0.35;
+}
+
+.action-btn-danger {
+  background: #FEF0ED;
+}
+
+.action-btn-danger .action-text {
+  color: #C0735A;
+}
+
+.action-text {
+  font-size: 26rpx;
+  color: #6B4F35;
+  font-weight: 500;
+}
+
+/* 添加新广告 */
+.add-section {
+  padding: 20rpx 24rpx 0;
+}
+
+.add-btn {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  height: 140rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-shadow: 0 2rpx 16rpx rgba(44,26,14,0.07);
+  border: 2rpx dashed #D2C8BB;
+}
+
+.add-icon {
+  font-size: 56rpx;
+  color: #9C8672;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.add-text {
+  font-size: 28rpx;
+  color: #9C8672;
+}
+
+.add-full-tip {
+  padding: 24rpx;
+  text-align: center;
+}
+
+.add-full-text {
+  font-size: 24rpx;
+  color: #C0B8AE;
+}
+
+/* 底部保存 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #FFFFFF;
+  border-top: 1rpx solid #EDE5D8;
+  padding: 16rpx 32rpx calc(env(safe-area-inset-bottom) + 16rpx);
+  display: flex;
+  gap: 20rpx;
+}
+
+.reset-btn {
+  flex: 1;
+  background: #F5EFE6;
+  border-radius: 48rpx;
+  padding: 28rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #9C8672;
+  font-weight: 500;
+}
+
+.save-btn {
+  flex: 2;
+  background: #2C1A0E;
+  border-radius: 48rpx;
+  padding: 28rpx 0;
+  text-align: center;
+  font-size: 30rpx;
+  color: #F5EFE6;
+  font-weight: 500;
+}
+
+.save-btn.saving {
+  background: #8B7961;
+}

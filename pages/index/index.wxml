@@ -1,0 +1,207 @@
+<view class="page">
+  <!-- 顶部标题 + 搜索 -->
+  <view class="header">
+    <view class="header-top">
+      <view class="logo-wrap">
+        <text class="logo-en">Petit Aura</text>
+        <text class="logo-cn">3D打印定制 · 拼豆 · 创意生活小物</text>
+      </view>
+    </view>
+    <view class="search-bar">
+      <image class="search-icon-img" src="/images/icons/search.svg" mode="aspectFit" />
+      <input
+        class="search-input"
+        placeholder="搜索你喜爱的商品"
+        placeholder-class="search-placeholder"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+        confirm-type="search"
+      />
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-body" enhanced show-scrollbar="{{false}}">
+
+    <!-- 轮播 Banner -->
+    <swiper
+      class="banner-swiper"
+      autoplay
+      interval="4000"
+      circular
+      indicator-dots
+      indicator-color="rgba(44,26,14,0.25)"
+      indicator-active-color="#2C1A0E"
+      bindchange="onBannerChange"
+    >
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <view class="banner-item" style="background:{{item.bg}};" bindtap="onMoreFeatured">
+          <view class="banner-text-side">
+            <text class="banner-main-title">{{item.mainTitle}}</text>
+            <text class="banner-subtitle">{{item.subtitle}}</text>
+            <view class="banner-action-btn">
+              <text class="banner-btn-text">{{item.btn}} ›</text>
+            </view>
+          </view>
+          <view class="banner-img-side">
+            <image src="{{item.image}}" mode="aspectFill" class="banner-slide-img" lazy-load />
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 分类快捷入口 -->
+    <view class="cat-grid">
+      <view
+        class="cat-item"
+        wx:for="{{categories}}"
+        wx:key="id"
+        bindtap="onCategoryTap"
+        data-id="{{item.id}}"
+      >
+        <view class="cat-icon-wrap">
+          <image class="cat-icon-svg" src="/images/icons/{{item.id}}.svg" mode="aspectFit" />
+        </view>
+        <text class="cat-name">{{item.name}}</text>
+      </view>
+    </view>
+
+    <!-- 新人专享·超值好物 -->
+    <view class="section-header" wx:if="{{newbieProducts.length > 0}}">
+      <view class="section-title-wrap">
+        <text class="section-title">新人专享</text>
+        <text class="section-title-dot">·</text>
+        <text class="section-title-sub">超值好物</text>
+      </view>
+      <text class="section-more" bindtap="onMoreNewbie">更多 ›</text>
+    </view>
+
+    <scroll-view scroll-x class="h-scroll newbie-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{newbieProducts.length > 0}}">
+      <view class="h-list newbie-list">
+        <view
+          class="newbie-card"
+          wx:for="{{newbieProducts}}"
+          wx:key="id"
+          bindtap="onNewbieTap"
+          data-id="{{item.id}}"
+        >
+          <view class="newbie-img-wrap">
+            <image src="{{item.image}}" mode="aspectFill" class="newbie-img" lazy-load />
+            <view class="newbie-badge">新人价</view>
+          </view>
+          <view class="newbie-info">
+            <text class="newbie-name">{{item.name}}</text>
+            <text class="newbie-desc">{{item.desc}}</text>
+            <view class="newbie-bottom">
+              <view class="newbie-price-wrap">
+                <text class="newbie-price-symbol">¥</text>
+                <text class="newbie-price">{{item.price}}</text>
+              </view>
+              <view class="add-btn" catchtap="onAddNewbieToCart" data-id="{{item.id}}">
+                <text class="add-btn-text">+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 精选推荐 -->
+    <view class="section-header">
+      <text class="section-title">精选推荐</text>
+      <text class="section-more" bindtap="onMoreFeatured">更多 ›</text>
+    </view>
+
+    <scroll-view scroll-x class="h-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="h-list">
+        <view
+          class="h-card"
+          wx:for="{{featuredProducts}}"
+          wx:key="id"
+          bindtap="onProductTap"
+          data-id="{{item.id}}"
+        >
+          <view class="h-img-wrap">
+            <image src="{{item.image}}" mode="aspectFill" class="h-img" lazy-load />
+            <view class="card-fav {{item.isFav ? 'card-fav-active' : ''}}" catchtap="onQuickFav" data-id="{{item.id}}" data-index="{{index}}" data-type="featured">
+              <text class="card-fav-icon">{{item.isFav ? '♥' : '♡'}}</text>
+            </view>
+          </view>
+          <view class="h-info">
+            <text class="h-name">{{item.name}}</text>
+            <view class="h-tags">
+              <text class="h-tag" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+            </view>
+            <view class="h-bottom">
+              <view class="h-price-wrap">
+                <text class="h-price">¥{{item.price}}</text>
+                <text class="h-price-unit">起</text>
+              </view>
+              <view class="add-btn" catchtap="onAddToCart" data-id="{{item.id}}">
+                <text class="add-btn-text">+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 大家都在做 -->
+    <view class="section-header" wx:if="{{grassPosts.length > 0}}">
+      <view class="section-title-wrap">
+        <text class="section-title">大家都在做</text>
+      </view>
+      <text class="section-more" bindtap="onMoreGrass">更多 ›</text>
+    </view>
+    <scroll-view scroll-x class="h-scroll grass-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{grassPosts.length > 0}}">
+      <view class="h-list grass-list">
+        <view
+          class="grass-card"
+          wx:for="{{grassPosts}}"
+          wx:key="id"
+          bindtap="onGrassTap"
+          data-id="{{item.id}}"
+        >
+          <view class="grass-img-wrap">
+            <image src="{{item.image}}" mode="aspectFill" class="grass-img" lazy-load />
+            <view class="grass-avatar-circle">{{item.avatar}}</view>
+          </view>
+          <view class="grass-info">
+            <text class="grass-username">{{item.username}}</text>
+            <text class="grass-title-text">{{item.title}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 新品上市 -->
+    <view class="section-header">
+      <text class="section-title">新品上市</text>
+      <text class="section-more" bindtap="onToggleMoreNew">{{showMoreNew ? '收起 ‹' : '更多 ›'}}</text>
+    </view>
+
+    <view class="grid-2">
+      <view
+        class="grid-card"
+        wx:for="{{showMoreNew ? newProducts : newProductsPreview}}"
+        wx:key="id"
+        bindtap="onProductTap"
+        data-id="{{item.id}}"
+      >
+        <view class="grid-img-wrap">
+          <image src="{{item.image}}" mode="aspectFill" class="grid-img" lazy-load />
+          <view class="new-badge">新品</view>
+        </view>
+        <view class="grid-info">
+          <text class="grid-name">{{item.name}}</text>
+          <view class="grid-bottom">
+            <text class="grid-price">¥{{item.price}}</text>
+            <view class="add-btn-sm" catchtap="onAddToCart" data-id="{{item.id}}">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="page-bottom"></view>
+  </scroll-view>
+</view>

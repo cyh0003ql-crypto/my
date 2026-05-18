@@ -1,0 +1,127 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">精选评论管理</view>
+
+  <!-- 商品选择列表 -->
+  <view class="prod-list" wx:if="{{!selectedProduct}}">
+    <view class="prod-list-tip">选择商品以管理评论</view>
+    <view
+      class="prod-list-item"
+      wx:for="{{productList}}"
+      wx:key="id"
+      bindtap="onSelectProduct"
+      data-id="{{item.id}}"
+    >
+      <view class="pli-left">
+        <view class="pli-dot {{item.isNewbie ? 'dot-newbie' : 'dot-regular'}}"></view>
+        <view class="pli-info">
+          <text class="pli-name">{{item.name}}</text>
+          <text class="pli-type">{{item.isNewbie ? '新人专享' : '普通商品'}}</text>
+        </view>
+      </view>
+      <view class="pli-right">
+        <view class="pli-count-badge" wx:if="{{item.reviewCount > 0}}">
+          <text class="pli-count-num">{{item.reviewCount}}</text>
+          <text class="pli-count-label"> 条评价</text>
+        </view>
+        <text class="pli-count-empty" wx:else>暂无评论</text>
+        <text class="pli-arrow">›</text>
+      </view>
+    </view>
+    <view class="prod-list-empty" wx:if="{{productList.length === 0}}">
+      <text class="empty-tip-text">暂无商品，请先添加商品</text>
+    </view>
+  </view>
+
+  <!-- 已选商品的评论管理 -->
+  <view wx:if="{{selectedProduct}}">
+    <view class="selected-prod-bar" bindtap="onBackToList">
+      <text class="back-arrow">‹</text>
+      <text class="selected-prod-name">{{selectedProductName}}</text>
+      <text class="change-btn">切换商品</text>
+    </view>
+
+    <view class="reviews-area">
+      <view class="add-rv-btn" bindtap="onAddReview">＋ 商家添加精选评论</view>
+
+      <view class="empty-state" wx:if="{{reviews.length === 0}}">
+        <text class="empty-text">暂无评论，可点击上方按钮添加精选评论</text>
+      </view>
+
+      <view class="rv-card" wx:for="{{reviews}}" wx:key="id">
+        <view class="rv-head">
+          <view class="rv-ava">{{item.avatar || '🙂'}}</view>
+          <view class="rv-meta">
+            <text class="rv-user">{{item.username}}</text>
+            <view class="rv-stars">
+              <text class="rv-star {{si < item.rating ? 'rv-on' : 'rv-off'}}" wx:for="{{[0,1,2,3,4]}}" wx:for-index="si" wx:for-item="sv" wx:key="si">★</text>
+            </view>
+          </view>
+          <text class="rv-date">{{item.createdAt ? item.createdAt.substring(0,10) : ''}}</text>
+        </view>
+        <view class="rv-sku-row" wx:if="{{item.sku}}">
+          <text class="rv-sku-label">规格：</text>
+          <text class="rv-sku-val">{{item.sku}}</text>
+        </view>
+        <text class="rv-content">{{item.content}}</text>
+        <view class="rv-badges">
+          <view class="rv-badge merchant-tag" wx:if="{{item.isMerchantAdded}}">商家添加</view>
+          <view class="rv-badge highlight-tag" wx:if="{{item.isHighlight}}">精选</view>
+        </view>
+        <view class="rv-actions">
+          <view class="rv-act {{item.isHighlight ? 'act-hl-on' : 'act-hl-off'}}" bindtap="onToggleHighlight" data-index="{{index}}">
+            {{item.isHighlight ? '★ 取消精选' : '☆ 设为精选'}}
+          </view>
+          <view class="rv-act act-del" bindtap="onDelete" data-index="{{index}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</scroll-view>
+
+<view class="modal-mask" wx:if="{{showAddModal}}" bindtap="onCloseModal"></view>
+<view class="add-modal" wx:if="{{showAddModal}}">
+  <view class="modal-drag-bar"></view>
+  <view class="modal-hd">
+    <text class="modal-title">添加精选评论</text>
+    <text class="modal-close" bindtap="onCloseModal">✕</text>
+  </view>
+  <scroll-view scroll-y style="max-height: 65vh;">
+    <view class="mf-row">
+      <text class="mf-label">买家昵称</text>
+      <input class="mf-input" placeholder="买家昵称" bindinput="onNewUsernameInput" />
+    </view>
+    <view class="mf-row">
+      <text class="mf-label">评分</text>
+      <view class="modal-stars">
+        <text class="m-star {{newRating >= item ? 'ms-on' : 'ms-off'}}" wx:for="{{[1,2,3,4,5]}}" wx:key="index" bindtap="onNewStarTap" data-val="{{item}}">★</text>
+      </view>
+    </view>
+    <view class="mf-row" wx:if="{{selectedProductSkuOptions.length > 0}}">
+      <text class="mf-label">购买规格（可选）</text>
+      <view class="sku-group-m" wx:for="{{selectedProductSkuOptions}}" wx:key="name">
+        <text class="sku-group-name-m">{{item.name}}</text>
+        <view class="sku-chips-m">
+          <view
+            class="sku-chip-m {{newSkuSelected[item.name] === v ? 'sku-chip-m-on' : ''}}"
+            wx:for="{{item.values}}"
+            wx:for-item="v"
+            wx:key="index"
+            bindtap="onNewSkuSelect"
+            data-group="{{item.name}}"
+            data-val="{{v}}"
+          >{{v}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="mf-row">
+      <text class="mf-label">评价内容 *</text>
+      <view class="mf-textarea-wrap">
+        <textarea class="mf-textarea" placeholder="输入评价内容..." bindinput="onNewContentInput" auto-height />
+      </view>
+    </view>
+  </scroll-view>
+  <button class="modal-save-btn" bindtap="onSaveReview">保存</button>
+  <view style="height:env(safe-area-inset-bottom);"></view>
+</view>

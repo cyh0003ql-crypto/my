@@ -1,0 +1,81 @@
+page { background: #F5EFE6; }
+.page { background: #F5EFE6; min-height: 100vh; }
+
+.g-nav {
+  position: relative; padding: 20rpx 28rpx;
+  display: flex; align-items: center;
+  background: #F5EFE6;
+}
+.g-back {
+  width: 68rpx; height: 68rpx;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.g-back-icon { font-size: 52rpx; color: #2C1A0E; font-weight: 300; line-height: 1; }
+.g-nav-title {
+  position: absolute; left: 0; right: 0;
+  text-align: center; font-size: 32rpx; font-weight: 600; color: #2C1A0E;
+  pointer-events: none;
+}
+
+.hero-wrap { width: 100%; background: #EDE5D8; }
+.hero-img { width: 100%; display: block; }
+
+.user-row { display: flex; align-items: center; gap: 16rpx; padding: 24rpx 32rpx 4rpx; }
+.user-avatar {
+  width: 64rpx; height: 64rpx; border-radius: 50%;
+  background: #EDE5D8; display: flex; align-items: center;
+  justify-content: center; font-size: 30rpx;
+  flex-shrink: 0;
+}
+.user-name { font-size: 28rpx; font-weight: 600; color: #C87941; }
+
+.content-block { padding: 12rpx 32rpx 24rpx; }
+.post-title { font-size: 36rpx; font-weight: 700; color: #2C1A0E; display: block; margin-bottom: 10rpx; line-height: 1.45; }
+.post-location { font-size: 24rpx; color: #9C8672; display: block; margin-bottom: 16rpx; }
+.post-content { font-size: 28rpx; color: #5A4535; line-height: 1.8; display: block; margin-bottom: 20rpx; }
+.tags-row { display: flex; flex-wrap: wrap; gap: 4rpx; }
+.g-tag { font-size: 24rpx; color: #C87941; }
+
+.like-bar {
+  padding: 8rpx 32rpx 24rpx;
+  display: flex;
+  align-items: center;
+}
+.like-btn {
+  display: flex; align-items: center; gap: 10rpx;
+  background: #FFFFFF; border-radius: 48rpx;
+  padding: 14rpx 28rpx;
+  border: 2rpx solid #EDE5D8;
+  box-shadow: 0 2rpx 8rpx rgba(44,26,14,0.06);
+}
+.like-btn-active {
+  background: #FEF0E8; border-color: #C87941;
+}
+.like-icon { font-size: 32rpx; color: #C0B8AE; line-height: 1; }
+.like-btn-active .like-icon { color: #C87941; }
+.like-count { font-size: 28rpx; color: #9C8672; }
+.like-btn-active .like-count { color: #C87941; }
+
+.linked-prod-card {
+  margin: 0 32rpx 32rpx;
+  background: #FFFFFF; border-radius: 20rpx;
+  padding: 20rpx; display: flex; align-items: center; gap: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(44,26,14,0.08);
+}
+.lp-img { width: 100rpx; height: 100rpx; border-radius: 12rpx; background: #EDE5D8; flex-shrink: 0; }
+.lp-info { flex: 1; min-width: 0; }
+.lp-shop { font-size: 22rpx; color: #9C8672; display: block; margin-bottom: 6rpx; }
+.lp-name { font-size: 26rpx; font-weight: 500; color: #2C1A0E; display: block; margin-bottom: 8rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lp-bottom { display: flex; align-items: center; }
+.lp-price { font-size: 28rpx; font-weight: 700; color: #2C1A0E; }
+.lp-sold { font-size: 22rpx; color: #9C8672; }
+.lp-btn {
+  background: #2C1A0E; color: #F5EFE6;
+  font-size: 24rpx; padding: 14rpx 24rpx;
+  border-radius: 30rpx; flex-shrink: 0;
+}
+
+.page-error { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 20rpx; }
+.err-text { font-size: 30rpx; color: #9C8672; }
+.err-back { background: #2C1A0E; color: #F5EFE6; font-size: 28rpx; padding: 20rpx 60rpx; border-radius: 48rpx; }

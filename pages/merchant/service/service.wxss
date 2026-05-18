@@ -1,0 +1,38 @@
+.page { background: #F0ECE6; height: 100vh; }
+.page-title { font-size: 32rpx; font-weight: 600; color: #3A332D; padding: 28rpx 24rpx 0; }
+.form-section { padding: 20rpx 24rpx 0; }
+.section-label { font-size: 24rpx; color: #8B7961; display: block; margin-bottom: 12rpx; text-transform: uppercase; letter-spacing: 1rpx; }
+.form-group { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; }
+.field { display: flex; align-items: center; padding: 24rpx; border-bottom: 1rpx solid #F0ECE6; gap: 16rpx; }
+.field:last-child { border-bottom: none; }
+.f-label { width: 90rpx; font-size: 26rpx; color: #8B7961; flex-shrink: 0; }
+.f-input { flex: 1; font-size: 28rpx; color: #3A332D; height: 80rpx; line-height: 80rpx; }
+
+.desc-wrap { background: #FFFFFF; border-radius: 20rpx; padding: 24rpx; }
+.desc-input { width: 100%; min-height: 160rpx; font-size: 28rpx; color: #3A332D; }
+
+/* 二维码 */
+.qr-picker-wrap { background: #FFFFFF; border-radius: 20rpx; padding: 24rpx; display: flex; flex-direction: column; align-items: center; }
+.qr-empty {
+  width: 100%; height: 280rpx;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16rpx; border: 2rpx dashed #D2C8BB; border-radius: 16rpx;
+}
+.qr-empty-icon { font-size: 72rpx; opacity: 0.4; }
+.qr-empty-text { font-size: 26rpx; color: #C0B8AE; }
+.qr-preview-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16rpx; }
+.qr-preview { width: 300rpx; height: 300rpx; border-radius: 16rpx; }
+.qr-actions { display: flex; gap: 16rpx; }
+.qr-btn {
+  font-size: 26rpx; color: #8B7961;
+  background: #EAE6E0; padding: 12rpx 32rpx; border-radius: 32rpx;
+}
+.qr-btn.danger { color: #C0735A; background: #FEF3EA; }
+
+.save-btn {
+  margin: 32rpx 24rpx 0;
+  background: #3A332D; color: #F6F3EF;
+  border-radius: 48rpx; font-size: 32rpx; font-weight: 500;
+  padding: 28rpx 0; text-align: center; border: none; line-height: 1; width: calc(100% - 48rpx);
+}
+.save-btn::after { border: none; }

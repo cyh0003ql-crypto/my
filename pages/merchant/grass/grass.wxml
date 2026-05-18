@@ -1,0 +1,30 @@
+<scroll-view scroll-y class="page">
+  <view class="page-hd">
+    <text class="page-title">大家都在做 · 管理</text>
+    <view class="add-btn" bindtap="onAdd">＋ 新增</view>
+  </view>
+
+  <view class="empty-state" wx:if="{{posts.length === 0}}">
+    <text class="empty-icon">✨</text>
+    <text class="empty-text">暂无种草卡，点击右上角新增</text>
+  </view>
+
+  <view class="post-list" wx:else>
+    <view class="post-card" wx:for="{{posts}}" wx:key="id">
+      <image src="{{item.image}}" mode="aspectFill" class="post-thumb" />
+      <view class="post-body">
+        <text class="post-user">{{item.username}}</text>
+        <text class="post-title-text">{{item.title}}</text>
+        <view class="post-actions">
+          <view class="act-badge {{item.isActive ? 'act-on' : 'act-off'}}" bindtap="onToggleActive" data-id="{{item.id}}" data-active="{{item.isActive}}">
+            {{item.isActive ? '● 已上线' : '○ 已下线'}}
+          </view>
+          <view class="act-btn act-edit" bindtap="onEdit" data-id="{{item.id}}">编辑</view>
+          <view class="act-btn act-del" bindtap="onDelete" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</scroll-view>

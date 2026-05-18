@@ -1,0 +1,21 @@
+.page { background: #F0ECE6; min-height: 100vh; }
+.page-title { font-size: 36rpx; font-weight: 700; color: #2C1A0E; padding: 36rpx 28rpx 4rpx; }
+.page-sub { font-size: 24rpx; color: #8B7961; padding: 0 28rpx 28rpx; }
+.form-section { padding: 12rpx 28rpx 0; }
+.section-label { font-size: 24rpx; color: #8B7961; display: block; margin-bottom: 10rpx; font-weight: 500; }
+.form-group { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; }
+.f-input {
+  display: block; width: 100%; padding: 28rpx 28rpx;
+  font-size: 30rpx; color: #2C1A0E; box-sizing: border-box;
+  height: 88rpx; line-height: 88rpx;
+}
+.tips-block { margin: 28rpx 28rpx 0; background: #FEF8F0; border-radius: 16rpx; padding: 20rpx 24rpx; }
+.tip-text { font-size: 24rpx; color: #9C7A56; line-height: 1.6; }
+.save-btn {
+  margin: 36rpx 28rpx 0;
+  background: #2C1A0E; color: #F5EFE6;
+  border-radius: 48rpx; font-size: 32rpx; font-weight: 600;
+  padding: 30rpx 0; text-align: center; border: none; line-height: 1;
+  width: calc(100% - 56rpx);
+}
+.save-btn::after { border: none; }

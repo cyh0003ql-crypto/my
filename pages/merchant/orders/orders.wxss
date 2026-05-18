@@ -1,0 +1,77 @@
+.page { background: #F0ECE6; min-height: 100vh; position: relative; }
+
+/* 物流信息行 */
+.tracking-row { display: flex; align-items: center; padding: 10rpx 24rpx; background: #EAF0FE; border-top: 1rpx solid #E0E8FA; }
+.tracking-label { font-size: 22rpx; color: #4A7CC7; flex-shrink: 0; margin-right: 12rpx; }
+.tracking-val { font-size: 22rpx; color: #4A7CC7; font-weight: 500; }
+
+/* 物流录入弹窗 */
+.modal-mask { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.45); z-index: 200; }
+.tracking-modal { position: fixed; left: 40rpx; right: 40rpx; top: 50%; transform: translateY(-50%); background: #FFFFFF; border-radius: 28rpx; padding: 40rpx 32rpx 36rpx; z-index: 201; box-shadow: 0 8rpx 40rpx rgba(0,0,0,0.18); }
+.tmodal-title { display: block; font-size: 32rpx; font-weight: 700; color: #2C1A0E; text-align: center; margin-bottom: 28rpx; }
+.tmodal-field { margin-bottom: 20rpx; }
+.tmodal-field-label { display: block; font-size: 24rpx; color: #6B4F35; margin-bottom: 10rpx; font-weight: 500; }
+.tmodal-required { color: #C87341; }
+.tmodal-input { width: 100%; background: #F5EFE6; border-radius: 14rpx; padding: 22rpx 24rpx; font-size: 28rpx; color: #2C1A0E; box-sizing: border-box; border: 2rpx solid #EDE5D8; height: 80rpx; line-height: 80rpx; }
+.tmodal-placeholder { color: #C0B8AE; font-size: 26rpx; }
+.tmodal-btns { display: flex; gap: 16rpx; margin-top: 8rpx; }
+.tmodal-cancel { flex: 1; text-align: center; padding: 24rpx 0; border-radius: 16rpx; font-size: 28rpx; background: #F0EBE0; color: #6B4F35; }
+.tmodal-confirm { flex: 2; text-align: center; padding: 24rpx 0; border-radius: 16rpx; font-size: 28rpx; font-weight: 600; background: #2C1A0E; color: #F5EFE6; }
+
+
+.tabs { display: flex; background: #FFFFFF; border-bottom: 1rpx solid #EAE6E0; position: sticky; top: 0; z-index: 10; }
+.tab-item { flex: 1; text-align: center; padding: 28rpx 0; border-bottom: 4rpx solid transparent; }
+.tab-item.active { border-bottom-color: #3A332D; }
+.tab-label { font-size: 26rpx; color: #8B7961; }
+.tab-item.active .tab-label { color: #3A332D; font-weight: 600; }
+.orders-scroll { height: calc(100vh - 100rpx); }
+.orders-list { padding: 20rpx 24rpx; }
+.order-card { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; margin-bottom: 20rpx; box-shadow: 0 2rpx 12rpx rgba(58,51,45,0.06); }
+.order-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 20rpx 24rpx; border-bottom: 1rpx solid #F0ECE6; }
+.order-id { font-size: 24rpx; color: #3A332D; display: block; font-weight: 600; margin-bottom: 4rpx; }
+.order-user { font-size: 22rpx; color: #8B7961; display: block; }
+.status-tag { font-size: 24rpx; font-weight: 600; padding: 6rpx 16rpx; border-radius: 8rpx; }
+.status-tag.paid { background: #FEF3EA; color: #C87941; }
+.status-tag.shipped { background: #EAF0FE; color: #4A7CC7; }
+.status-tag.completed { background: #EAF5ED; color: #5A9A6A; }
+.status-tag.cancelled { background: #F0ECE6; color: #C0B8AE; }
+.order-products { padding: 12rpx 24rpx; }
+.prod-row { display: flex; gap: 16rpx; padding: 12rpx 0; border-bottom: 1rpx solid #F0ECE6; align-items: center; }
+.prod-row:last-child { border-bottom: none; }
+.prod-img { width: 96rpx; height: 96rpx; border-radius: 10rpx; background: #EAE6E0; flex-shrink: 0; }
+.prod-info { flex: 1; }
+.prod-name { font-size: 26rpx; color: #3A332D; display: block; margin-bottom: 4rpx; }
+.prod-spec { font-size: 22rpx; color: #8B7961; display: block; }
+.prod-right { text-align: right; }
+.prod-price { font-size: 26rpx; color: #8B7961; font-weight: 600; display: block; }
+.prod-qty { font-size: 22rpx; color: #C0B8AE; display: block; }
+.addr-row { display: flex; padding: 12rpx 24rpx; background: #FAFAF8; border-top: 1rpx solid #F0ECE6; }
+.addr-label { font-size: 22rpx; color: #8B7961; flex-shrink: 0; }
+.addr-text { font-size: 22rpx; color: #3A332D; flex: 1; line-height: 1.5; }
+.order-date-row { display: flex; align-items: center; gap: 12rpx; padding: 10rpx 24rpx; border-bottom: 1rpx solid #F0ECE6; }
+.date-label { font-size: 22rpx; color: #C0B8AE; flex-shrink: 0; }
+.date-val { font-size: 22rpx; color: #8B7961; }
+
+.price-detail { padding: 16rpx 24rpx 8rpx; border-top: 1rpx solid #F0ECE6; background: #FAFAF8; }
+.price-row-item { display: flex; justify-content: space-between; align-items: center; padding: 7rpx 0; }
+.price-label { font-size: 24rpx; color: #8B7961; }
+.price-val { font-size: 24rpx; color: #3A332D; }
+.coupon-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4rpx; }
+.coupon-name { font-size: 20rpx; color: #C87941; background: #FEF3EA; padding: 2rpx 10rpx; border-radius: 6rpx; }
+.discount-val { color: #C87941; font-weight: 600; }
+.price-total-row { display: flex; justify-content: space-between; align-items: center; padding: 12rpx 0 4rpx; border-top: 1rpx solid #EAE6E0; margin-top: 6rpx; }
+.price-total-label { font-size: 26rpx; color: #3A332D; font-weight: 600; }
+.price-total-val { font-size: 32rpx; color: #6B4F35; font-weight: 700; }
+
+.remark-row { display: flex; align-items: flex-start; gap: 12rpx; padding: 14rpx 24rpx; border-top: 1rpx solid #F0ECE6; background: #FAFAF8; }
+.remark-label { font-size: 22rpx; color: #8B7961; flex-shrink: 0; }
+.remark-val { font-size: 24rpx; color: #3A332D; flex: 1; line-height: 1.5; }
+
+.order-actions { padding: 16rpx 24rpx 20rpx; display: flex; gap: 16rpx; justify-content: flex-end; border-top: 1rpx solid #F0ECE6; }
+.act-btn { font-size: 24rpx; padding: 14rpx 28rpx; border-radius: 28rpx; }
+.ship-btn { background: #3A332D; color: #F6F3EF; }
+.complete-btn { background: #EAF5ED; color: #5A9A6A; }
+.cancel-btn { background: #F0ECE6; color: #8B7961; }
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120rpx 32rpx; }
+.empty-icon { font-size: 100rpx; margin-bottom: 24rpx; opacity: 0.4; }
+.empty-text { font-size: 28rpx; color: #8B7961; }

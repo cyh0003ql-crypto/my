@@ -1,0 +1,182 @@
+.page { background: #F0ECE6; height: 100vh; }
+.page-title { font-size: 32rpx; font-weight: 600; color: #3A332D; padding: 28rpx 24rpx 0; }
+.form-section { padding: 20rpx 24rpx 0; }
+.section-label { font-size: 24rpx; color: #8B7961; display: block; margin-bottom: 12rpx; text-transform: uppercase; letter-spacing: 1rpx; }
+.form-group { background: #FFFFFF; border-radius: 20rpx; overflow: hidden; }
+.field { display: flex; align-items: center; padding: 24rpx; border-bottom: 1rpx solid #F0ECE6; gap: 16rpx; }
+.field:last-child { border-bottom: none; }
+.f-label { width: 80rpx; font-size: 26rpx; color: #8B7961; flex-shrink: 0; }
+.f-input { flex: 1; font-size: 28rpx; color: #3A332D; height: 80rpx; line-height: 80rpx; }
+.picker-val { font-size: 28rpx; color: #3A332D; }
+.toggle-field { justify-content: space-between; }
+.toggle { width: 80rpx; height: 44rpx; background: #D2C8BB; border-radius: 22rpx; position: relative; transition: background 0.2s; }
+.toggle.on { background: #3A332D; }
+.toggle-ball { width: 36rpx; height: 36rpx; background: #FFFFFF; border-radius: 50%; position: absolute; top: 4rpx; left: 4rpx; transition: left 0.2s; }
+.toggle.on .toggle-ball { left: 40rpx; }
+
+/* ── 多图选择网格 ── */
+.img-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.img-thumb {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  position: relative;
+  background: #EAE6E0;
+}
+
+.thumb-img {
+  width: 160rpx;
+  height: 160rpx;
+  display: block;
+}
+
+.thumb-del {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(58,51,45,0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.thumb-cover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(58,51,45,0.55);
+  padding: 6rpx 0;
+  text-align: center;
+}
+
+.cover-label {
+  font-size: 20rpx;
+  color: #FFFFFF;
+}
+
+.img-add {
+  width: 160rpx;
+  height: 160rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  border: 2rpx dashed #D2C8BB;
+}
+
+.add-icon {
+  font-size: 52rpx;
+  color: #C0B8AE;
+  line-height: 1;
+}
+
+.add-tip {
+  font-size: 22rpx;
+  color: #C0B8AE;
+}
+
+/* 描述 */
+.desc-wrap { background: #FFFFFF; border-radius: 20rpx; padding: 24rpx; }
+.desc-input { width: 100%; min-height: 180rpx; font-size: 28rpx; color: #3A332D; }
+
+/* ── 新增品类 ── */
+.new-cat-wrap { background: #FFFFFF; border-radius: 20rpx; padding: 24rpx; }
+.new-cat-input { font-size: 28rpx; color: #3A332D; border-bottom: 1rpx solid #EDE5D8; padding-bottom: 16rpx; width: 100%; }
+.new-cat-btns { display: flex; gap: 16rpx; margin-top: 20rpx; justify-content: flex-end; }
+.new-cat-cancel { font-size: 26rpx; color: #9C8672; padding: 12rpx 24rpx; border: 1rpx solid #D2C8BB; border-radius: 32rpx; }
+.new-cat-confirm { font-size: 26rpx; color: #FFFFFF; background: #3A332D; padding: 12rpx 28rpx; border-radius: 32rpx; }
+
+/* ── SKU 规格编辑 ── */
+.sku-section-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12rpx; }
+.sku-add-btn { font-size: 26rpx; color: #C87941; padding: 12rpx 28rpx; border: 1rpx solid #C87941; border-radius: 24rpx; }
+.sku-group-edit { background: #FFFFFF; border-radius: 16rpx; padding: 28rpx; margin-bottom: 16rpx; }
+.sku-group-row { display: flex; align-items: center; gap: 12rpx; margin-bottom: 20rpx; }
+.sku-name-input { flex: 1; font-size: 30rpx; color: #3A332D; font-weight: 500; border-bottom: 2rpx solid #EDE5D8; padding-bottom: 14rpx; height: 76rpx; line-height: 76rpx; }
+.sku-del-btn { font-size: 30rpx; color: #C0B8AE; padding: 10rpx; }
+.sku-vals-input { width: 100%; font-size: 28rpx; color: #6B4F35; background: #F8F4F0; border-radius: 12rpx; padding: 20rpx 20rpx; box-sizing: border-box; min-height: 88rpx; line-height: 1.6; }
+.sku-empty-hint { background: #FFFFFF; border-radius: 16rpx; padding: 32rpx; text-align: center; }
+.sku-empty-text { font-size: 26rpx; color: #C0B8AE; }
+
+/* ── SKU 图片关联（新版） ── */
+.sku-vals-preview-label {
+  font-size: 22rpx; color: #B0A090;
+  display: block; margin-top: 20rpx; margin-bottom: 10rpx;
+}
+.sku-chips-preview { display: flex; flex-wrap: wrap; gap: 12rpx; margin-bottom: 16rpx; }
+.sku-chip-preview {
+  font-size: 24rpx; color: #5A4535;
+  background: #F0ECE6; border-radius: 28rpx;
+  padding: 8rpx 20rpx; border: 1rpx solid #EDE5D8;
+}
+.sku-img-map-label {
+  font-size: 22rpx; color: #B0A090;
+  display: block; margin-bottom: 14rpx;
+  padding-top: 16rpx; border-top: 1rpx solid #F0ECE6;
+}
+.sku-img-val-grid { display: flex; flex-wrap: wrap; gap: 16rpx; margin-bottom: 8rpx; }
+.sku-val-img-item { display: flex; flex-direction: column; align-items: center; gap: 8rpx; }
+.sku-val-tag {
+  font-size: 22rpx; color: #5A4535;
+  background: #F0ECE6; border-radius: 8rpx;
+  padding: 4rpx 14rpx; text-align: center; max-width: 120rpx;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sku-linked-img-wrap {
+  width: 100rpx; height: 100rpx;
+  border-radius: 12rpx; overflow: hidden; position: relative;
+  border: 2rpx solid #C87941;
+}
+.sku-linked-img { width: 100rpx; height: 100rpx; display: block; }
+.sku-img-del-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(44,26,14,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28rpx; color: #FFFFFF;
+  opacity: 0;
+}
+.sku-img-upload-btn {
+  width: 100rpx; height: 100rpx;
+  background: #F8F4F0; border-radius: 12rpx;
+  border: 2rpx dashed #D2C8BB;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6rpx;
+}
+.sku-img-upload-icon { font-size: 34rpx; color: #C0B8AE; line-height: 1; }
+.sku-img-upload-text { font-size: 20rpx; color: #C0B8AE; }
+
+/* (kept for any legacy reference) */
+.sku-pick-check {
+  display: none;
+  width: 30rpx; height: 30rpx; background: #C87941; border-radius: 50%;
+  color: #FFFFFF;
+  font-size: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 保存按钮 */
+.save-btn {
+  margin: 32rpx 24rpx 0;
+  background: #3A332D; color: #F6F3EF;
+  border-radius: 48rpx; font-size: 32rpx; font-weight: 500;
+  padding: 28rpx 0; text-align: center; border: none; line-height: 1; width: calc(100% - 48rpx);
+}
+.save-btn::after { border: none; }

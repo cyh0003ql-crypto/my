@@ -1,0 +1,108 @@
+<view class="page">
+  <!-- 标签栏 -->
+  <view class="tabs">
+    <view
+      class="tab-item {{activeTab === index ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="index"
+      bindtap="onTabTap"
+      data-index="{{index}}"
+    >
+      <text class="tab-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="orders-scroll">
+    <view wx:if="{{orders.length === 0}}" class="empty-state">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无相关订单</text>
+    </view>
+
+    <view class="orders-list" wx:else>
+      <view class="order-card" wx:for="{{orders}}" wx:key="id">
+        <!-- 订单头 -->
+        <view class="order-head">
+          <view>
+            <text class="order-id">{{item.id}}</text>
+            <text class="order-user">用户：{{item.userId}}</text>
+          </view>
+          <text class="status-tag {{item.status}}">
+            {{item.status === 'paid' ? '待发货' : item.status === 'shipped' ? '已发货' : item.status === 'completed' ? '已完成' : '已取消'}}
+          </text>
+        </view>
+
+        <!-- 时间 -->
+        <view class="order-date-row">
+          <text class="date-label">下单时间</text>
+          <text class="date-val">{{item.timeStr}}</text>
+        </view>
+
+        <!-- 商品 -->
+        <view class="order-products">
+          <view class="prod-row" wx:for="{{item.products}}" wx:for-item="prod" wx:key="id">
+            <image src="{{prod.image}}" mode="aspectFill" class="prod-img" />
+            <view class="prod-info">
+              <text class="prod-name">{{prod.name}}</text>
+              <text class="prod-spec">{{prod.material}}</text>
+            </view>
+            <view class="prod-right">
+              <text class="prod-price">¥{{prod.price}}</text>
+              <text class="prod-qty">×{{prod.quantity}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 价格明细 -->
+        <view class="price-detail">
+          <view class="price-row-item" wx:if="{{item.productTotal}}">
+            <text class="price-label">商品小计</text>
+            <text class="price-val">¥{{item.productTotal}}</text>
+          </view>
+          <view class="price-row-item" wx:if="{{item.shipping !== undefined}}">
+            <text class="price-label">运　　费</text>
+            <text class="price-val">{{item.shipping === 0 ? '免运费' : '¥' + item.shipping}}</text>
+          </view>
+          <view class="price-row-item" wx:if="{{item.couponDiscount && item.couponDiscount > 0}}">
+            <text class="price-label">优惠减免</text>
+            <view class="coupon-info">
+              <text class="coupon-name" wx:if="{{item.coupon}}">{{item.coupon.title}}</text>
+              <text class="price-val discount-val">-¥{{item.couponDiscount}}</text>
+            </view>
+          </view>
+          <view class="price-total-row">
+            <text class="price-total-label">实付金额</text>
+            <text class="price-total-val">¥{{item.totalAmount}}</text>
+          </view>
+        </view>
+
+        <!-- 备注 -->
+        <view class="remark-row" wx:if="{{item.remark}}">
+          <text class="remark-label">买家备注</text>
+          <text class="remark-val">{{item.remark}}</text>
+        </view>
+
+        <!-- 地址 -->
+        <view class="addr-row" wx:if="{{item.address}}">
+          <text class="addr-label">收　　货</text>
+          <text class="addr-text">{{item.address.name}} {{item.address.phone}} {{item.address.province}}{{item.address.city}}{{item.address.detail}}</text>
+        </view>
+
+        <!-- 物流信息（已发货） -->
+        <view class="tracking-row" wx:if="{{item.tracking && item.status !== 'paid'}}">
+          <text class="tracking-label">物流信息</text>
+          <text class="tracking-val">{{item.tracking.carrier}} {{item.tracking.number}}</text>
+        </view>
+
+        <!-- 操作 -->
+        <view class="order-actions">
+          <view class="act-btn ship-btn" wx:if="{{item.status === 'paid'}}" bindtap="onShip" data-id="{{item.id}}">确认发货</view>
+          <view class="act-btn complete-btn" wx:if="{{item.status === 'shipped'}}" bindtap="onComplete" data-id="{{item.id}}">完成订单</view>
+          <view class="act-btn cancel-btn" wx:if="{{item.status === 'paid'}}" bindtap="onCancel" data-id="{{item.id}}">取消</view>
+        </view>
+      </view>
+    </view>
+
+    <view style="height:40rpx;"></view>
+  </scroll-view>
+
+</view>

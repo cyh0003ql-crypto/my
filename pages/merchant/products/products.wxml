@@ -1,0 +1,103 @@
+<view class="page">
+  <!-- 标签切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 0 ? 'active' : ''}}" bindtap="onTabSwitch" data-tab="0">
+      普通商品
+      <text class="tab-count-badge" wx:if="{{products.length > 0}}">{{products.length}}</text>
+    </view>
+    <view class="tab-item {{activeTab === 1 ? 'active' : ''}}" bindtap="onTabSwitch" data-tab="1">
+      新人专享
+      <text class="tab-count-badge" wx:if="{{newbieProducts.length > 0}}">{{newbieProducts.length}}</text>
+    </view>
+  </view>
+
+  <!-- 普通商品列表 -->
+  <view wx:if="{{activeTab === 0}}">
+    <view class="toolbar">
+      <text class="tool-count">共 {{products.length}} 件商品</text>
+      <view class="add-btn" bindtap="onAdd">+ 添加商品</view>
+    </view>
+
+    <scroll-view scroll-y class="prod-scroll">
+      <view wx:if="{{products.length === 0}}" class="empty-state">
+        <text class="empty-icon">📦</text>
+        <text class="empty-text">暂无商品，快去添加吧</text>
+      </view>
+
+      <view class="prod-list" wx:else>
+        <view class="prod-card" wx:for="{{products}}" wx:key="id">
+          <image src="{{item.image}}" mode="aspectFill" class="prod-img" />
+          <view class="prod-info">
+            <view class="prod-name-row">
+              <text class="prod-name">{{item.name}}</text>
+              <text class="prod-id">ID: {{item.id}}</text>
+            </view>
+            <view class="prod-meta">
+              <text class="prod-price">¥{{item.price}}</text>
+              <text class="prod-stock {{item.stock <= 3 ? 'low' : ''}}">库存: {{item.stock}}</text>
+            </view>
+            <view class="prod-badges">
+              <view class="badge {{item.isFeatured ? 'on' : 'off'}}" catchtap="onToggleFeatured" data-id="{{item.id}}">
+                {{item.isFeatured ? '⭐ 精选' : '精选'}}
+              </view>
+              <view class="badge {{item.isNew ? 'on' : 'off'}}">
+                {{item.isNew ? '🆕 新品' : '旧品'}}
+              </view>
+            </view>
+          </view>
+          <view class="prod-actions">
+            <view class="act-btn stock" catchtap="onUpdateStock" data-id="{{item.id}}">改库存</view>
+            <view class="act-btn edit" catchtap="onEdit" data-id="{{item.id}}">编辑</view>
+            <view class="act-btn del" catchtap="onDelete" data-id="{{item.id}}" data-name="{{item.name}}">删除</view>
+          </view>
+        </view>
+      </view>
+
+      <view style="height:40rpx;"></view>
+    </scroll-view>
+  </view>
+
+  <!-- 新人商品列表 -->
+  <view wx:if="{{activeTab === 1}}">
+    <view class="toolbar">
+      <text class="tool-count">共 {{newbieProducts.length}} 件新人商品</text>
+      <view class="add-btn" bindtap="onAddNewbie">+ 添加新人商品</view>
+    </view>
+
+    <scroll-view scroll-y class="prod-scroll">
+      <view wx:if="{{newbieProducts.length === 0}}" class="empty-state">
+        <text class="empty-icon">🎁</text>
+        <text class="empty-text">暂无新人专享商品，快去添加吧</text>
+      </view>
+
+      <view class="prod-list" wx:else>
+        <view class="prod-card" wx:for="{{newbieProducts}}" wx:key="id">
+          <image src="{{item.image}}" mode="aspectFill" class="prod-img" />
+          <view class="prod-info">
+            <view class="prod-name-row">
+              <text class="prod-name">{{item.name}}</text>
+            </view>
+            <view class="prod-meta">
+              <text class="prod-price">¥{{item.price}}</text>
+              <text class="prod-origin">原¥{{item.originalPrice}}</text>
+              <text class="prod-stock {{item.stock <= 3 ? 'low' : ''}}">库存: {{item.stock}}</text>
+            </view>
+            <view class="prod-badges">
+              <view class="badge {{item.isActive !== false ? 'on' : 'off'}}" catchtap="onToggleNewbieActive" data-id="{{item.id}}">
+                {{item.isActive !== false ? '✓ 上架中' : '已下架'}}
+              </view>
+              <view class="badge newbie-tag">🎁 新人专享</view>
+            </view>
+          </view>
+          <view class="prod-actions">
+            <view class="act-btn stock" catchtap="onUpdateNewbieStock" data-id="{{item.id}}">改库存</view>
+            <view class="act-btn edit" catchtap="onEditNewbie" data-id="{{item.id}}">编辑</view>
+            <view class="act-btn del" catchtap="onDeleteNewbie" data-id="{{item.id}}" data-name="{{item.name}}">删除</view>
+          </view>
+        </view>
+      </view>
+
+      <view style="height:40rpx;"></view>
+    </scroll-view>
+  </view>
+</view>
