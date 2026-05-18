@@ -1,0 +1,75 @@
+<scroll-view scroll-y class="page">
+
+  <view class="empty" wx:if="{{requests.length === 0}}">
+    <text class="empty-icon">✏️</text>
+    <text class="empty-text">暂无定制记录</text>
+    <text class="empty-sub">去定制页提交你的专属需求</text>
+    <view class="empty-btn" bindtap="onGoCustom">立即定制</view>
+  </view>
+
+  <view class="req-card" wx:for="{{requests}}" wx:key="id">
+    <!-- 头部 -->
+    <view class="card-top">
+      <text class="req-id-text">{{item.id}}</text>
+      <view class="status-pill {{item.status}}">
+        <text>{{item.status === 'pending' ? '待处理' : item.status === 'processing' ? '处理中' : '已完成'}}</text>
+      </view>
+    </view>
+
+    <!-- 提交时间 -->
+    <view class="meta-row">
+      <text class="meta-label">提交时间</text>
+      <text class="meta-val">{{item.createdAtFmt}}</text>
+    </view>
+
+    <!-- 描述 -->
+    <view class="desc-row" wx:if="{{item.description}}">
+      <text class="meta-label">需求描述</text>
+      <text class="desc-text">{{item.description}}</text>
+    </view>
+
+    <!-- 尺寸 -->
+    <view class="meta-row" wx:if="{{item.size}}">
+      <text class="meta-label">尺寸要求</text>
+      <text class="meta-val">{{item.size}}</text>
+    </view>
+
+    <!-- 参考案例 -->
+    <view class="meta-row" wx:if="{{item.selectedCaseNames && item.selectedCaseNames.length > 0}}">
+      <text class="meta-label">参考案例</text>
+      <text class="meta-val">{{item.selectedCaseNames.join('、')}}</text>
+    </view>
+
+    <!-- 上传图片 -->
+    <view class="img-section" wx:if="{{item.images && item.images.length > 0}}">
+      <text class="meta-label">上传图片</text>
+      <scroll-view scroll-x class="img-scroll">
+        <image
+          class="thumb-img"
+          src="{{img}}"
+          mode="aspectFill"
+          bindtap="onPreview"
+          data-src="{{img}}"
+          data-list="{{item.images}}"
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="index"
+        />
+      </scroll-view>
+    </view>
+
+    <!-- 商家回复 -->
+    <view class="reply-area" wx:if="{{item.merchantReply}}">
+      <view class="reply-header">
+        <text class="reply-from">💬 商家回复</text>
+        <text class="reply-time">{{item.replyAt}}</text>
+      </view>
+      <text class="reply-text">{{item.merchantReply}}</text>
+    </view>
+    <view class="no-reply-area" wx:else>
+      <text class="no-reply-text">商家还未回复，请耐心等待</text>
+    </view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</scroll-view>

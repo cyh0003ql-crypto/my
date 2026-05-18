@@ -1,0 +1,79 @@
+<scroll-view scroll-y class="page">
+  <view class="page-title">写评价</view>
+  <text class="page-sub" wx:if="{{products.length > 1}}">本订单共 {{products.length}} 件商品，请分别评价</text>
+
+  <view class="prod-review-block" wx:for="{{products}}" wx:key="id">
+    <view class="prod-card">
+      <image class="prod-thumb" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}" />
+      <text class="prod-name">{{item.name}}</text>
+    </view>
+
+    <view class="section-block">
+      <text class="f-label">评分</text>
+      <view class="stars-row">
+        <view
+          class="star-item {{reviews[index].rating >= sv ? 'star-active' : 'star-idle'}}"
+          wx:for="{{[1,2,3,4,5]}}"
+          wx:for-item="sv"
+          wx:for-index="si"
+          wx:key="sv"
+          bindtap="onStarTap"
+          data-idx="{{index}}"
+          data-val="{{sv}}"
+        >★</view>
+      </view>
+      <text class="rating-hint">{{reviews[index].rating > 0 ? ratingLabels[reviews[index].rating - 1] : '点击选择评分'}}</text>
+    </view>
+
+    <view class="section-block">
+      <text class="f-label">评价内容 *</text>
+      <view class="textarea-wrap">
+        <textarea
+          class="rv-textarea"
+          placeholder="分享您的使用体验，帮助更多人了解这款产品～"
+          bindinput="onContentInput"
+          data-idx="{{index}}"
+          value="{{reviews[index].content}}"
+          maxlength="500"
+          auto-height
+        />
+      </view>
+    </view>
+
+    <view class="section-block">
+      <text class="f-label">上传图片（可选，最多4张）</text>
+      <view class="rv-img-grid">
+        <view
+          class="rv-img-thumb"
+          wx:for="{{reviews[index].images}}"
+          wx:for-item="img"
+          wx:for-index="imgIdx"
+          wx:key="imgIdx"
+        >
+          <image src="{{img}}" mode="aspectFill" class="rv-thumb-img" bindtap="onPreviewReviewImage" data-pidx="{{index}}" data-iidx="{{imgIdx}}" />
+          <view class="rv-thumb-del" catchtap="onDeleteReviewImage" data-pidx="{{index}}" data-iidx="{{imgIdx}}">✕</view>
+        </view>
+        <view
+          class="rv-img-add"
+          wx:if="{{reviews[index].images.length < 4}}"
+          bindtap="onChooseReviewImages"
+          data-idx="{{index}}"
+        >
+          <text class="rv-add-icon">＋</text>
+          <text class="rv-add-tip">{{reviews[index].images.length}}/4</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="prod-divider" wx:if="{{index < products.length - 1}}"></view>
+  </view>
+
+  <view class="tips-block">
+    <text class="tip-text">📝 您的评价将帮助商家改进产品和服务</text>
+  </view>
+
+  <button class="submit-btn" bindtap="onSubmit">
+    {{products.length > 1 ? '提交全部评价' : '提交评价'}}
+  </button>
+  <view style="height:60rpx;"></view>
+</scroll-view>

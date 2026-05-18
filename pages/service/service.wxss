@@ -1,0 +1,67 @@
+page { background: #F0ECE6; height: 100%; }
+.page { background: #F0ECE6; min-height: 100vh; }
+
+/* 头部 */
+.service-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 32rpx 32rpx;
+  background: #F6F3EF;
+}
+.header-icon { font-size: 72rpx; margin-bottom: 16rpx; }
+.header-title { font-size: 36rpx; font-weight: 700; color: #3A332D; margin-bottom: 8rpx; }
+.header-sub { font-size: 26rpx; color: #8B7961; }
+
+/* 通用卡片 */
+.info-card, .note-card, .qr-card, .faq-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin: 16rpx 24rpx 0;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 10rpx rgba(58,51,45,0.05);
+}
+
+/* 信息行 */
+.info-row { display: flex; align-items: center; gap: 16rpx; padding: 8rpx 0; }
+.info-icon { font-size: 36rpx; flex-shrink: 0; }
+.info-body { flex: 1; }
+.info-label { display: block; font-size: 22rpx; color: #C0B8AE; margin-bottom: 4rpx; }
+.info-val { display: block; font-size: 28rpx; color: #3A332D; font-weight: 500; }
+.copy-btn {
+  font-size: 24rpx;
+  color: #8B7961;
+  background: #EAE6E0;
+  padding: 8rpx 20rpx;
+  border-radius: 24rpx;
+}
+.info-divider { height: 1rpx; background: #F0ECE6; margin: 16rpx 0; }
+
+/* 备注 */
+.note-title { display: block; font-size: 28rpx; font-weight: 600; color: #3A332D; margin-bottom: 12rpx; }
+.note-text { display: block; font-size: 26rpx; color: #8B7961; line-height: 1.7; }
+
+/* 二维码 */
+.qr-title { display: block; font-size: 28rpx; font-weight: 600; color: #3A332D; margin-bottom: 20rpx; text-align: center; }
+.qr-wrap { display: flex; justify-content: center; }
+.qr-img { width: 320rpx; height: 320rpx; border-radius: 16rpx; }
+.qr-placeholder {
+  width: 320rpx; height: 280rpx;
+  background: #F0ECE6;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+.qr-placeholder-icon { font-size: 64rpx; opacity: 0.4; }
+.qr-placeholder-text { font-size: 26rpx; color: #8B7961; }
+.qr-placeholder-sub { font-size: 22rpx; color: #C0B8AE; }
+
+/* FAQ */
+.faq-title { display: block; font-size: 28rpx; font-weight: 600; color: #3A332D; margin-bottom: 20rpx; }
+.faq-item { margin-bottom: 20rpx; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-q { display: block; font-size: 26rpx; color: #3A332D; font-weight: 500; margin-bottom: 6rpx; }
+.faq-a { display: block; font-size: 24rpx; color: #8B7961; line-height: 1.6; }

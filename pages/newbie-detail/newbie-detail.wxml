@@ -1,0 +1,262 @@
+<!-- 自定义导航栏 -->
+<view class="custom-nav" style="padding-top:{{statusBarHeight}}px;" wx:if="{{product}}">
+  <view class="nav-inner">
+    <view class="nav-back" bindtap="onBack">
+      <text class="nav-back-icon">‹</text>
+    </view>
+    <text class="nav-title">Petit Aura</text>
+  </view>
+</view>
+
+<!-- 商品正常页 -->
+<scroll-view
+  scroll-y
+  class="page"
+  wx:if="{{product}}"
+  style="margin-top:{{navHeight}}px; height:calc(100vh - {{navHeight}}px);"
+>
+
+  <!-- 图片轮播 -->
+  <view class="img-section">
+    <swiper
+      class="img-swiper"
+      circular
+      indicator-dots
+      indicator-color="rgba(255,255,255,0.45)"
+      indicator-active-color="#FFFFFF"
+    >
+      <swiper-item wx:for="{{product.images}}" wx:key="index">
+        <image
+          src="{{item}}"
+          mode="aspectFill"
+          class="main-img"
+          data-src="{{item}}"
+          bindtap="onPreviewImage"
+          lazy-load
+        />
+      </swiper-item>
+    </swiper>
+    <view class="img-float-btns">
+      <view class="img-float-btn share-btn" bindtap="onShare">
+        <text class="img-float-icon share-float-icon">↑</text>
+      </view>
+      <view
+        class="img-float-btn {{favScaling ? 'fav-scaling' : ''}}"
+        bindtouchstart="onFavTouchStart"
+        bindtouchend="onFavTouchEnd"
+        bindtap="onToggleFavorite"
+      >
+        <text class="img-float-icon {{isFavorite ? 'heart-active' : 'heart-idle'}}">{{isFavorite ? '♥' : '♡'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 价格 + 名称 -->
+  <view class="info-block">
+    <view class="price-row">
+      <text class="price">¥{{product.price}}</text>
+      <text class="origin-price" wx:if="{{product.originalPrice > product.price}}">¥{{product.originalPrice}}</text>
+      <view class="price-badges">
+        <view class="sold-badge" wx:if="{{soldCount > 0}}">已售 {{soldCount}} 件</view>
+        <view class="stock-badge {{product.stock <= 3 ? 'low' : ''}}">
+          {{product.stock > 0 ? '库存 ' + product.stock : '已售罄'}}
+        </view>
+      </view>
+    </view>
+    <text class="prod-name">{{product.name}}</text>
+    <view class="tags-row">
+      <text class="tag newbie-exclusive-tag">🎁 新人专享</text>
+      <text class="tag" wx:for="{{product.tags}}" wx:key="index">{{item}}</text>
+    </view>
+    <view class="review-entry-row" bindtap="onGoAllReviews" wx:if="{{totalReviewCount > 0}}">
+      <text class="review-entry-icon">💬</text>
+      <text class="review-entry-label">用户评价 ({{totalReviewCount}})</text>
+      <text class="review-entry-more">查看全部评价 ›</text>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 专享说明 -->
+  <view class="spec-block">
+    <text class="block-title">专享说明</text>
+    <view class="spec-row">
+      <text class="spec-key">活动</text>
+      <text class="spec-val newbie-highlight">新人专享超值好物</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">原　价</text>
+      <text class="spec-val origin-val">¥{{product.originalPrice}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">专享价</text>
+      <text class="spec-val price-val">¥{{product.price}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">节省</text>
+      <text class="spec-val save-val">¥{{product.savedAmount}}</text>
+    </view>
+    <view class="spec-row">
+      <text class="spec-key">分　类</text>
+      <text class="spec-val">新人专享</text>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 数量选择 -->
+  <view class="qty-block">
+    <text class="block-title-inline">购买数量</text>
+    <view class="qty-ctrl">
+      <view class="qty-btn" bindtap="onQuantityMinus">
+        <text class="qty-symbol">−</text>
+      </view>
+      <text class="qty-num">{{quantity}}</text>
+      <view class="qty-btn" bindtap="onQuantityPlus">
+        <text class="qty-symbol">+</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 商品评价（评论在前，与普通详情页保持一致） -->
+  <view class="reviews-block">
+    <view class="reviews-hd">
+      <text class="block-title">评论</text>
+      <text class="reviews-more" wx:if="{{totalReviewCount > 0}}" bindtap="onGoAllReviews">{{totalReviewCount}}条好评 ›</text>
+    </view>
+
+    <view class="empty-review" wx:if="{{reviews.length === 0}}">
+      <text class="empty-review-text">暂无评价，快来第一个评价吧～</text>
+    </view>
+
+    <view class="rv-card" wx:for="{{reviews}}" wx:key="index">
+      <view class="rv-head">
+        <text class="rv-avatar">{{item.avatar || '🙂'}}</text>
+        <view class="rv-meta">
+          <text class="rv-user">{{item.username}}</text>
+          <view class="rv-stars">
+            <text class="rv-star {{sv ? 'star-on' : 'star-off'}}" wx:for="{{item.stars}}" wx:for-item="sv" wx:for-index="si" wx:key="si">★</text>
+          </view>
+        </view>
+        <text class="rv-date">{{item.dateStr}}</text>
+      </view>
+      <text class="rv-sku" wx:if="{{item.sku}}">规格：{{item.sku}}</text>
+      <text class="rv-content">{{item.content}}</text>
+      <!-- 评价图片 -->
+      <view class="rv-imgs" wx:if="{{item.images && item.images.length > 0}}">
+        <image
+          class="rv-img"
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:for-index="ii"
+          wx:key="ii"
+          src="{{img}}"
+          mode="aspectFill"
+          bindtap="onPreviewReviewImage"
+          data-src="{{img}}"
+          data-urls="{{item.images}}"
+        />
+      </view>
+      <view class="rv-highlight-tag" wx:if="{{item.isHighlight}}">精选</view>
+    </view>
+  </view>
+
+  <view class="sep"></view>
+
+  <!-- 商品详情 -->
+  <view class="desc-block">
+    <text class="block-title">商品详情</text>
+    <text class="desc-text" wx:if="{{product.description}}">{{product.description}}</text>
+    <text class="desc-text desc-empty" wx:elif="{{!product.description && product.descImages.length === 0}}">暂无详情</text>
+    <!-- 详情图片 -->
+    <view class="desc-imgs" wx:if="{{product.descImages && product.descImages.length > 0}}">
+      <image
+        class="desc-img"
+        wx:for="{{product.descImages}}"
+        wx:key="index"
+        src="{{item}}"
+        mode="widthFix"
+        bindtap="onPreviewDescImage"
+        data-src="{{item}}"
+        data-urls="{{product.descImages}}"
+        lazy-load
+      />
+    </view>
+  </view>
+
+  <view class="scroll-bottom"></view>
+</scroll-view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar" wx:if="{{product}}">
+  <view class="bar-btns">
+    <button class="btn-cart" bindtap="onAddToCart">加入购物车</button>
+    <button class="btn-buy" bindtap="onBuyNow">立即购买</button>
+  </view>
+  <view class="safe-area"></view>
+</view>
+
+<!-- 支付弹窗遮罩 -->
+<view class="modal-mask" wx:if="{{product && showBuyModal}}" bindtap="onCloseModal"></view>
+
+<!-- 支付弹窗 -->
+<view class="pay-modal" wx:if="{{product && showBuyModal}}">
+  <view class="modal-drag-bar"></view>
+  <view class="modal-hd">
+    <text class="modal-title">确认支付</text>
+    <view class="modal-close-btn" bindtap="onCloseModal">✕</view>
+  </view>
+
+  <scroll-view scroll-y class="modal-scroll-body">
+    <view class="modal-product-row">
+      <image src="{{product.images[0]}}" mode="aspectFill" class="modal-thumb" />
+      <view class="modal-prod-info">
+        <text class="modal-prod-name">{{product.name}}</text>
+        <text class="modal-prod-spec">新人专享</text>
+        <text class="modal-prod-qty">数量：{{quantity}}</text>
+      </view>
+    </view>
+
+    <view class="modal-amount-row">
+      <text class="modal-amount-label">订单金额</text>
+      <text class="modal-amount">¥{{totalAmount}}</text>
+    </view>
+
+    <view class="gift-bag-row" bindtap="onToggleGiftBag">
+      <view class="gift-bag-left">
+        <text class="gift-bag-icon">🎁</text>
+        <view class="gift-bag-info">
+          <text class="gift-bag-name">礼品包装</text>
+          <text class="gift-bag-tip">精美礼品袋 · 送人更有心意</text>
+        </view>
+      </view>
+      <view class="gift-bag-right">
+        <text class="gift-bag-price">+¥8</text>
+        <view class="gift-toggle {{addGiftBag ? 'on' : ''}}">
+          <view class="gift-toggle-ball"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="pay-options">
+    <view class="pay-opt active">
+      <text class="pay-opt-icon">💚</text>
+      <text class="pay-opt-name">微信支付</text>
+      <text class="pay-opt-check">✓</text>
+    </view>
+  </view>
+
+  <text class="pay-dev-tip">（开发阶段·模拟支付）</text>
+  <button class="pay-confirm" bindtap="onSimulatePay">确认支付  ¥{{totalAmount}}</button>
+  <view class="safe-area"></view>
+</view>
+
+<!-- 商品加载失败 -->
+<view class="page-error" wx:if="{{!product}}">
+  <text class="error-icon">🔍</text>
+  <text class="error-text">商品信息不存在</text>
+  <view class="error-back" bindtap="onBack">返回</view>
+</view>

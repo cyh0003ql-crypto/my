@@ -1,0 +1,115 @@
+<view class="page">
+  <!-- 标签栏 -->
+  <view class="tabs">
+    <view
+      class="tab-item {{activeTab === index ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="index"
+      bindtap="onTabTap"
+      data-index="{{index}}"
+    >
+      <text class="tab-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="orders-scroll">
+    <view wx:if="{{orders.length === 0}}" class="empty-state">
+      <text class="empty-icon">📦</text>
+      <text class="empty-text">暂无相关订单</text>
+    </view>
+
+    <view wx:else class="orders-list">
+      <view class="order-card" wx:for="{{orders}}" wx:key="id">
+        <!-- 订单头 -->
+        <view class="order-head">
+          <text class="order-id">{{item.id}}</text>
+          <text class="order-status {{item.status}}">
+            {{item.status === 'paid' ? '待发货' : item.status === 'shipped' ? '已发货' : item.status === 'completed' ? '已完成' : '已取消'}}
+          </text>
+        </view>
+
+        <!-- 下单时间 -->
+        <view class="order-date-row">
+          <text class="order-date-label">下单时间</text>
+          <text class="order-date-val">{{item.timeStr}}</text>
+        </view>
+
+        <!-- 商品列表 -->
+        <view class="order-products">
+          <view class="order-prod-item" wx:for="{{item.products}}" wx:for-item="prod" wx:key="id">
+            <image src="{{prod.image}}" mode="aspectFill" class="prod-img" />
+            <view class="prod-info">
+              <text class="prod-name">{{prod.name}}</text>
+              <text class="prod-spec">{{prod.material}}</text>
+              <view class="prod-bottom">
+                <text class="prod-price">¥{{prod.price}}</text>
+                <text class="prod-qty">×{{prod.quantity}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 价格明细 -->
+        <view class="price-detail">
+          <view class="price-row-item" wx:if="{{item.productTotal}}">
+            <text class="price-label">商品小计</text>
+            <text class="price-val">¥{{item.productTotal}}</text>
+          </view>
+          <view class="price-row-item" wx:if="{{item.shipping !== undefined}}">
+            <text class="price-label">运　　费</text>
+            <text class="price-val">{{item.shipping === 0 ? '免运费' : '¥' + item.shipping}}</text>
+          </view>
+          <view class="price-row-item coupon-row" wx:if="{{item.couponDiscount && item.couponDiscount > 0}}">
+            <text class="price-label">优惠减免</text>
+            <view class="coupon-info">
+              <text class="price-coupon-name" wx:if="{{item.coupon}}">{{item.coupon.title}}</text>
+              <text class="price-val discount-val">-¥{{item.couponDiscount}}</text>
+            </view>
+          </view>
+          <view class="price-total-row">
+            <text class="price-total-label">实付金额</text>
+            <text class="price-total-val">¥{{item.totalAmount}}</text>
+          </view>
+        </view>
+
+        <!-- 备注 -->
+        <view class="remark-row" wx:if="{{item.remark}}">
+          <text class="remark-label">备　　注</text>
+          <text class="remark-val">{{item.remark}}</text>
+        </view>
+
+        <!-- 收货地址 -->
+        <view class="addr-row" wx:if="{{item.address}}">
+          <text class="addr-label">收货地址</text>
+          <text class="addr-val">{{item.address.name}} {{item.address.phone}} {{item.address.province}}{{item.address.city}}{{item.address.detail}}</text>
+        </view>
+
+        <!-- 物流信息 -->
+        <view wx:if="{{item.status === 'shipped' || item.status === 'completed'}}">
+          <view class="tracking-row" wx:if="{{item.tracking}}">
+            <text class="tracking-label">物流信息</text>
+            <view class="tracking-info">
+              <text class="tracking-carrier">{{item.tracking.carrier || '快递'}}</text>
+              <text class="tracking-num">{{item.tracking.number}}</text>
+            </view>
+          </view>
+          <view class="no-tracking-row" wx:else>
+            <text class="no-tracking-text">暂无物流信息，请耐心等待商家上传</text>
+          </view>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="order-actions" wx:if="{{item.status === 'shipped'}}">
+          <view class="action-btn-track" wx:if="{{item.tracking}}" bindtap="onViewTracking" data-tracking="{{item.tracking}}">查看物流</view>
+          <view class="action-btn-outline" bindtap="onConfirmReceive" data-id="{{item.id}}">确认收货</view>
+        </view>
+        <view class="order-actions" wx:if="{{item.status === 'completed'}}">
+          <view class="action-btn-review" wx:if="{{!item.reviewed}}" bindtap="onWriteReview" data-id="{{item.id}}" data-products="{{item.products}}">写评价</view>
+          <view class="action-btn-reviewed" wx:else>已评价 ✓</view>
+        </view>
+      </view>
+    </view>
+
+    <view style="height:40rpx;"></view>
+  </scroll-view>
+</view>

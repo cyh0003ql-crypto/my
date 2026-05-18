@@ -1,0 +1,74 @@
+<scroll-view scroll-y class="page">
+
+  <!-- 头部 -->
+  <view class="service-header">
+    <text class="header-icon">🎧</text>
+    <text class="header-title">联系客服</text>
+    <text class="header-sub">我们随时为您提供帮助</text>
+  </view>
+
+  <!-- 客服信息卡 -->
+  <view class="info-card">
+    <view class="info-row" bindtap="onCopyWechat">
+      <text class="info-icon">💬</text>
+      <view class="info-body">
+        <text class="info-label">客服微信号</text>
+        <text class="info-val">{{wechatId}}</text>
+      </view>
+      <text class="copy-btn">复制</text>
+    </view>
+    <view class="info-divider"></view>
+    <view class="info-row">
+      <text class="info-icon">🕐</text>
+      <view class="info-body">
+        <text class="info-label">服务时间</text>
+        <text class="info-val">{{description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加方式说明 -->
+  <view class="note-card">
+    <text class="note-title">📌 添加方式</text>
+    <text class="note-text">{{note}}</text>
+  </view>
+
+  <!-- 二维码区域 -->
+  <view class="qr-card">
+    <text class="qr-title">扫码添加客服</text>
+    <view class="qr-wrap">
+      <view wx:if="{{qrPath}}">
+        <image
+          src="{{qrPath}}"
+          mode="aspectFit"
+          class="qr-img"
+          bindtap="onPreviewQr"
+        />
+      </view>
+      <view wx:else class="qr-placeholder">
+        <text class="qr-placeholder-icon">📲</text>
+        <text class="qr-placeholder-text">二维码暂未配置</text>
+        <text class="qr-placeholder-sub">商家可在后台设置</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 常见问题 -->
+  <view class="faq-card">
+    <text class="faq-title">常见问题</text>
+    <view class="faq-item">
+      <text class="faq-q">Q：商品什么时候发货？</text>
+      <text class="faq-a">A：付款后1-3个工作日内发货，节假日顺延。</text>
+    </view>
+    <view class="faq-item">
+      <text class="faq-q">Q：支持退换货吗？</text>
+      <text class="faq-a">A：支持7天无理由退换，商品需保持原包装完好。</text>
+    </view>
+    <view class="faq-item">
+      <text class="faq-q">Q：运费多少？</text>
+      <text class="faq-a">A：订单满200元免运费，不满则运费15元。</text>
+    </view>
+  </view>
+
+  <view style="height:60rpx;"></view>
+</scroll-view>
